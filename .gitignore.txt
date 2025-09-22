@@ -1,0 +1,16 @@
+# Arquivos de dependências do Composer
+/vendor/
+
+# Arquivo de configuração de ambiente (contém senhas e chaves de API)
+.env
+.env.local
+
+# Arquivos de log e cache
+/logs/
+*.log
+/storage/logs/
+
+# Arquivos gerados por IDEs
+.idea/
+.vscode/
+.DS_Store
