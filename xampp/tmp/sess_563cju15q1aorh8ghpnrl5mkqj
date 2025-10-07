@@ -1,0 +1,79 @@
+ PMA_token |s:32:"4a2c75653f7b4a7e5a605667242a3e6f"; HMAC_secret |s:16:"'20+<bDS!T`nRhVm";browser_access_time|a:3:{s:7:"default";i:1757016386;s:36:"4841a9f1-cdd5-3b81-b684-d5a6ab726d8d";i:1757018624;s:36:"e2a7f9ca-3ea2-7c85-8e70-2fba199f8604";i:1757017739;}relation|a:1:{i:1;a:41:{s:7:"version";s:5:"5.2.1";s:4:"user";s:4:"root";s:2:"db";s:10:"phpmyadmin";s:8:"bookmark";s:13:"pma__bookmark";s:15:"central_columns";s:20:"pma__central_columns";s:11:"column_info";s:16:"pma__column_info";s:17:"designer_settings";s:22:"pma__designer_settings";s:16:"export_templates";s:21:"pma__export_templates";s:8:"favorite";s:13:"pma__favorite";s:7:"history";s:12:"pma__history";s:16:"navigationhiding";s:21:"pma__navigationhiding";s:9:"pdf_pages";s:14:"pma__pdf_pages";s:6:"recent";s:11:"pma__recent";s:8:"relation";s:13:"pma__relation";s:13:"savedsearches";s:18:"pma__savedsearches";s:12:"table_coords";s:17:"pma__table_coords";s:10:"table_info";s:15:"pma__table_info";s:13:"table_uiprefs";s:18:"pma__table_uiprefs";s:8:"tracking";s:13:"pma__tracking";s:10:"userconfig";s:15:"pma__userconfig";s:10:"usergroups";s:15:"pma__usergroups";s:5:"users";s:10:"pma__users";s:12:"bookmarkwork";b:1;s:8:"mimework";b:1;s:18:"centralcolumnswork";b:1;s:8:"commwork";b:1;s:9:"menuswork";b:1;s:20:"designersettingswork";b:1;s:11:"displaywork";b:1;s:19:"exporttemplateswork";b:1;s:12:"favoritework";b:1;s:7:"navwork";b:1;s:7:"pdfwork";b:1;s:10:"recentwork";b:1;s:7:"relwork";b:1;s:17:"savedsearcheswork";b:1;s:11:"historywork";b:1;s:12:"trackingwork";b:1;s:11:"uiprefswork";b:1;s:14:"userconfigwork";b:1;s:8:"allworks";b:1;}}tmpval|a:14:{s:14:"favoriteTables";a:1:{i:1;a:0:{}}s:12:"recentTables";a:1:{i:1;a:0:{}}s:18:"table_limit_offset";i:0;s:21:"table_limit_offset_db";s:9:"lancho_db";s:5:"query";a:5:{s:32:"904f84541f15d1f9c329a0477cf6868e";a:8:{s:3:"sql";s:440:"-- CÓDIGO SQL FINAL E SIMPLIFICADO PARA MÁXIMA COMPATIBILIDADE
+
+CREATE TABLE `Cliente` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` text NOT NULL,
+  `email` text NOT NULL,
+  `contato` text NOT NULL,
+  `senha` text NOT NULL,
+  `avatar_url` text DEFAULT NULL,
+  `role` text DEFAULT 'user',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_unique` (`email`(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"8f3dddc26440981568101fdea205df14";a:8:{s:3:"sql";s:558:"CREATE TABLE `Produto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` text NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `preco` decimal(10,2) NOT NULL,
+  `image_url` text DEFAULT NULL,
+  `stripe_price_id` text DEFAULT NULL,
+  `destaque` tinyint(1) DEFAULT 0,
+  `media_avaliacoes` decimal(3,2) DEFAULT 0.00,
+  `total_avaliacoes` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nome_unique` (`nome`(255)),
+  UNIQUE KEY `stripe_price_id_unique` (`stripe_price_id`(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"c0d0fa269fe706af0e65a0d8361e9b78";a:8:{s:3:"sql";s:361:"CREATE TABLE `Estoque` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_produto_unique` (`id_produto`),
+  FOREIGN KEY (`id_produto`) REFERENCES `Produto` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"8bfc39783f66203fabc24d00dc578e45";a:8:{s:3:"sql";s:383:"CREATE TABLE `Pedido` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_cliente` int(11) NOT NULL,
+  `descricao` text NOT NULL,
+  `valor` decimal(10,2) NOT NULL,
+  `data` text NOT NULL,
+  `status` text NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_cliente`) REFERENCES `Cliente` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"462970b59658b74e99aad71073c97b2b";a:8:{s:3:"sql";s:515:"CREATE TABLE `avaliacoes` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `produto_id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `nota` smallint(6) NOT NULL,
+  `comentario` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`produto_id`) REFERENCES `Produto` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}}s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;s:12:"display_blob";b:0;s:19:"hide_transformation";b:0;s:3:"pos";i:0;s:8:"max_rows";i:25;s:12:"repeat_cells";i:100;}two_factor_check|b:1;cache|a:3:{s:8:"server_1";a:4:{s:15:"userprefs_mtime";i:1757016386;s:14:"userprefs_type";s:2:"db";s:12:"config_mtime";i:1447170388;s:9:"userprefs";a:2:{s:7:"Console";a:1:{s:4:"Mode";s:8:"collapse";}s:4:"lang";s:5:"pt_BR";}}s:13:"server_1_root";a:15:{s:17:"is_create_db_priv";b:1;s:14:"is_reload_priv";b:1;s:12:"db_to_create";s:0:"";s:30:"dbs_where_create_table_allowed";a:1:{i:0;s:1:"*";}s:11:"dbs_to_test";b:0;s:9:"proc_priv";b:1;s:10:"table_priv";b:1;s:8:"col_priv";b:1;s:7:"db_priv";b:1;s:11:"binary_logs";a:0:{}s:18:"menu-levels-server";a:13:{s:9:"databases";s:15:"Bancos de dados";s:3:"sql";s:3:"SQL";s:6:"status";s:6:"Status";s:6:"rights";s:9:"Usuários";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:8:"settings";s:15:"Configurações";s:6:"binlog";s:12:"Log binário";s:11:"replication";s:12:"Replicação";s:4:"vars";s:10:"Variáveis";s:7:"charset";s:8:"Charsets";s:7:"plugins";s:7:"Plugins";s:6:"engine";s:7:"Motores";}s:14:"menu-levels-db";a:14:{s:9:"structure";s:9:"Estrutura";s:3:"sql";s:3:"SQL";s:6:"search";s:8:"Procurar";s:5:"query";s:8:"Consulta";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:9:"operation";s:11:"Operações";s:10:"privileges";s:12:"Privilégios";s:8:"routines";s:7:"Rotinas";s:6:"events";s:7:"Eventos";s:8:"triggers";s:11:"Acionadores";s:8:"tracking";s:13:"Monitoramento";s:8:"designer";s:8:"Designer";s:15:"central_columns";s:16:"Colunas centrais";}s:12:"is_superuser";b:1;s:14:"mysql_cur_user";s:14:"root@localhost";s:12:"is_grantuser";b:1;}s:13:"version_check";a:2:{s:8:"response";s:411:"{
+    "version": "5.2.2",
+    "date": "2025-01-21",
+    "releases": [
+        {
+            "version": "5.2.2",
+            "date": "2025-01-21",
+            "php_versions": ">=7.2,<8.4",
+            "mysql_versions": ">=5.5"
+        },
+        {
+            "version": "4.9.11",
+            "date": "2023-02-08",
+            "php_versions": ">=5.5,<8.0",
+            "mysql_versions": ">=5.5"
+        }
+    ]
+}";s:9:"timestamp";i:1757015831;}}git_location|N;is_git_revision|b:0;ConfigFile1|a:2:{s:7:"Console";a:1:{s:4:"Mode";s:8:"collapse";}s:7:"Servers";a:1:{i:1;a:2:{s:7:"only_db";s:0:"";s:7:"hide_db";s:0:"";}}}debug|a:0:{}flashMessages|a:0:{}Import_message|a:2:{s:7:"message";N;s:11:"go_back_url";s:48:"index.php?route=/database/structure&db=lancho_db";}is_multi_query|b:1;sql_from_query_box|b:1;sql_history|a:1:{i:0;a:3:{s:2:"db";s:9:"lancho_db";s:5:"table";s:0:"";s:8:"sqlquery";s:515:"CREATE TABLE `avaliacoes` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `produto_id` int(11) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  `nota` smallint(6) NOT NULL,
+  `comentario` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`produto_id`) REFERENCES `Produto` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";}}errors|a:0:{}

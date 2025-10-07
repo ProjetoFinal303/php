@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Pedidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html">Voltar</a>
+        <h2>Gerenciar Pedidos</h2>
+
+        <button onclick="listarPedidos()">Listar Todos os Pedidos</button>
+
+        <form id="readByClienteForm">
+            <h3>Listar Pedidos por Cliente</h3>
+            <div>
+                <label for="id_cliente_read">ID do Cliente:</label>
+                <input type="number" id="id_cliente_read" name="id_cliente" required>
+            </div>
+            <button type="submit">Buscar Pedidos</button>
+        </form>
+
+        <form id="createPedidoForm">
+            <h3>Criar Pedido</h3>
+            <div>
+                <label for="id_cliente">ID do Cliente:</label>
+                <input type="number" id="id_cliente" name="id_cliente" required>
+            </div>
+            <div>
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao" required></textarea>
+            </div>
+            <div>
+                <label for="valor">Valor:</label>
+                <input type="number" id="valor" name="valor" step="0.01" required>
+            </div>
+            <button type="submit">Criar</button>
+        </form>
+
+        <form id="updateStatusPedidoForm">
+            <h3>Atualizar Status do Pedido</h3>
+            <div>
+                <label for="update_id_pedido">ID do Pedido:</label>
+                <input type="number" id="update_id_pedido" name="id" required>
+            </div>
+            <div>
+                <label for="status">Novo Status:</label>
+                <input type="text" id="status" name="status" required>
+            </div>
+            <button type="submit">Atualizar Status</button>
+        </form>
+
+
+        <form id="deletePedidoForm">
+            <h3>Deletar Pedido</h3>
+            <div>
+                <label for="delete_id">ID do Pedido:</label>
+                <input type="number" id="delete_id" name="id" required>
+            </div>
+            <button type="submit">Deletar</button>
+        </form>
+
+
+        <h3>Resposta da API:</h3>
+        <pre id="response"></pre>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

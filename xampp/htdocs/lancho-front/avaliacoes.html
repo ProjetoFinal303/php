@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Avaliações</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html">Voltar</a>
+        <h2>Gerenciar Avaliações</h2>
+
+        <form id="readAvaliacoesByProdutoForm">
+            <h3>Listar Avaliações por Produto</h3>
+            <div>
+                <label for="produto_id_read">ID do Produto:</label>
+                <input type="number" id="produto_id_read" name="produto_id" required>
+            </div>
+            <button type="submit">Buscar Avaliações</button>
+        </form>
+
+        <form id="createAvaliacaoForm">
+            <h3>Criar Avaliação</h3>
+            <div>
+                <label for="produto_id">ID do Produto:</label>
+                <input type="number" id="produto_id" name="produto_id" required>
+            </div>
+            <div>
+                <label for="cliente_id">ID do Cliente:</label>
+                <input type="number" id="cliente_id" name="cliente_id" required>
+            </div>
+            <div>
+                <label for="nota">Nota (1-5):</label>
+                <input type="number" id="nota" name="nota" min="1" max="5" required>
+            </div>
+            <div>
+                <label for="comentario">Comentário:</label>
+                <textarea id="comentario" name="comentario"></textarea>
+            </div>
+            <button type="submit">Enviar Avaliação</button>
+        </form>
+
+        <h3>Resposta da API:</h3>
+        <pre id="response"></pre>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

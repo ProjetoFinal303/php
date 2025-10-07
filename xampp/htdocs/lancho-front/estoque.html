@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Estoque</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html">Voltar</a>
+        <h2>Gerenciar Estoque</h2>
+
+        <button onclick="listarEstoque()">Listar Estoque</button>
+
+        <form id="updateEstoqueForm">
+            <h3>Atualizar Estoque</h3>
+            <div>
+                <label for="id_produto">ID do Produto:</label>
+                <input type="number" id="id_produto" name="id_produto" required>
+            </div>
+            <div>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" name="quantidade" required>
+            </div>
+            <button type="submit">Atualizar</button>
+        </form>
+
+        <h3>Resposta da API:</h3>
+        <pre id="response"></pre>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
