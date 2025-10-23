@@ -1,7 +1,7 @@
 <?php
 class Ingrediente {
     private $conn;
-    private $table_name = "Ingrediente";
+    private $table_name = "ingrediente";
 
     public $id;
     public $nome;
@@ -22,7 +22,6 @@ class Ingrediente {
         $stmt = $this->conn->prepare($query);
         $this->nome=htmlspecialchars(strip_tags($this->nome));
         $stmt->bindParam(":nome", $this->nome);
-
         if($stmt->execute()) {
             return true;
         }
@@ -34,7 +33,6 @@ class Ingrediente {
         $stmt = $this->conn->prepare($query);
         $this->id=htmlspecialchars(strip_tags($this->id));
         $stmt->bindParam(1, $this->id);
-
         if($stmt->execute()) {
             return true;
         }
