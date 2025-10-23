@@ -1,7 +1,7 @@
 <?php
 class Produto {
     private $conn;
-    private $table_name = "Produto";
+    private $table_name = "produto";
 
     // Propriedades do objeto
     public $id;
@@ -27,21 +27,18 @@ class Produto {
     function create() {
         $query = "INSERT INTO " . $this->table_name . " SET nome=:nome, descricao=:descricao, preco=:preco, image_url=:image_url, stripe_price_id=:stripe_price_id";
         $stmt = $this->conn->prepare($query);
-
         // Limpar dados
         $this->nome=htmlspecialchars(strip_tags($this->nome));
         $this->descricao=htmlspecialchars(strip_tags($this->descricao));
         $this->preco=htmlspecialchars(strip_tags($this->preco));
         $this->image_url=htmlspecialchars(strip_tags($this->image_url));
         $this->stripe_price_id=htmlspecialchars(strip_tags($this->stripe_price_id));
-
         // Associar parâmetros
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":descricao", $this->descricao);
         $stmt->bindParam(":preco", $this->preco);
         $stmt->bindParam(":image_url", $this->image_url);
         $stmt->bindParam(":stripe_price_id", $this->stripe_price_id);
-
         if($stmt->execute()) {
             return true;
         }
@@ -52,7 +49,6 @@ class Produto {
     function update() {
         $query = "UPDATE " . $this->table_name . " SET nome = :nome, descricao = :descricao, preco = :preco, image_url = :image_url, stripe_price_id = :stripe_price_id WHERE id = :id";
         $stmt = $this->conn->prepare($query);
-
         // Limpar dados
         $this->nome=htmlspecialchars(strip_tags($this->nome));
         $this->descricao=htmlspecialchars(strip_tags($this->descricao));
@@ -60,7 +56,6 @@ class Produto {
         $this->image_url=htmlspecialchars(strip_tags($this->image_url));
         $this->stripe_price_id=htmlspecialchars(strip_tags($this->stripe_price_id));
         $this->id=htmlspecialchars(strip_tags($this->id));
-
         // Associar parâmetros
         $stmt->bindParam(':nome', $this->nome);
         $stmt->bindParam(':descricao', $this->descricao);
@@ -68,7 +63,6 @@ class Produto {
         $stmt->bindParam(':image_url', $this->image_url);
         $stmt->bindParam(':stripe_price_id', $this->stripe_price_id);
         $stmt->bindParam(':id', $this->id);
-
         if($stmt->execute()) {
             return true;
         }
@@ -79,13 +73,10 @@ class Produto {
     function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-
         // Limpar dados
         $this->id=htmlspecialchars(strip_tags($this->id));
-
         // Associar parâmetro
         $stmt->bindParam(1, $this->id);
-
         if($stmt->execute()) {
             return true;
         }
