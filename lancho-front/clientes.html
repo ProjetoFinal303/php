@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Clientes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciar Clientes</h1>
+        <a href="index.html">Voltar</a>
+        <h2>Buscar Cliente por ID</h2>
+        <form id="buscarClienteForm">
+            <label>ID do Cliente:</label>
+            <input type="number" name="id">
+            <button type="submit">Buscar</button>
+        </form>
+        <h2>Criar Cliente</h2>
+        <form id="criarClienteForm">
+            <label>Nome:</label>
+            <input type="text" name="nome">
+            <label>Email:</label>
+            <input type="email" name="email">
+            <label>Contato:</label>
+            <input type="text" name="contato">
+            <label>Senha:</label>
+            <input type="password" name="senha">
+            <button type="submit">Criar</button>
+        </form>
+        <h2>Atualizar Cliente</h2>
+        <form id="atualizarClienteForm">
+            <label>ID do Cliente:</label>
+            <input type="number" name="id">
+            <label>Novo Nome:</label>
+            <input type="text" name="nome">
+            <label>Novo Email:</label>
+            <input type="email" name="email">
+            <label>Novo Contato:</label>
+            <input type="text" name="contato">
+            <label>Nova URL do Avatar:</label>
+            <input type="text" name="avatar_url">
+            <label>Novo Role:</label>
+            <input type="text" name="role">
+            <button type="submit">Atualizar</button>
+        </form>
+        <h2>Deletar Cliente</h2>
+        <form id="deletarClienteForm">
+            <label>ID do Cliente:</label>
+            <input type="number" name="id">
+            <button type="submit">Deletar</button>
+        </form>
+        <h2>Resposta da API:</h2>
+        <div id="response"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

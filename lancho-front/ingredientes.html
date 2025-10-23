@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Ingredientes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Gerenciar Ingredientes</h1>
+    <a href="index.html">Voltar</a>
+    <h2>Criar Ingrediente</h2>
+    <form id="criarIngredienteForm">
+        <div><label>Nome:</label><input type="text" name="nome"></div>
+        <button type="submit">Criar</button>
+    </form>
+    <h2>Deletar Ingrediente</h2>
+    <form id="deletarIngredienteForm">
+        <div><label>ID do Ingrediente:</label><input type="number" name="id"></div>
+        <button type="submit">Deletar</button>
+    </form>
+    <h2>Resposta da API:</h2>
+    <div id="response"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

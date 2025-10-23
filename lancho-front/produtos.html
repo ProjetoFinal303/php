@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Produtos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciar Produtos</h1>
+        <a href="index.html">Voltar</a>
+
+        <h2>Criar Produto</h2>
+        <form id="criarProdutoForm">
+            <div><label>Nome:</label><input type="text" name="nome"></div>
+            <div><label>Descrição:</label><input type="text" name="descricao"></div>
+            <div><label>Preço:</label><input type="number" name="preco"></div>
+            <div><label>URL da Imagem:</label><input type="text" name="image_url"></div>
+            <div><label>Stripe Price ID:</label><input type="text" name="stripe_price_id"></div>
+            <button type="submit">Criar</button>
+        </form>
+
+        <h2>Atualizar Produto</h2>
+        <form id="atualizarProdutoForm">
+            <div><label>ID do Produto:</label><input type="number" name="id"></div>
+            <div><label>Novo Nome:</label><input type="text" name="nome"></div>
+            <div><label>Nova Descrição:</label><input type="text" name="descricao"></div>
+            <div><label>Novo Preço:</label><input type="number" name="preco"></div>
+            <div><label>Nova URL da Imagem:</label><input type="text" name="image_url"></div>
+            <div><label>Novo Stripe Price ID:</label><input type="text" name="stripe_price_id"></div>
+            <button type="submit">Atualizar</button>
+        </form>
+
+        <h2>Deletar Produto</h2>
+        <form id="deletarProdutoForm">
+            <div><label>ID do Produto:</label><input type="number" name="id"></div>
+            <button type="submit">Deletar</button>
+        </form>
+
+        <h2>Resposta da API:</h2>
+        <div id="response"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

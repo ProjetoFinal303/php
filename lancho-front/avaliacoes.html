@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Avaliações</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Gerenciar Avaliações</h1>
+    <a href="index.html">Voltar</a>
+    <h2>Listar Avaliações por Produto</h2>
+    <form id="listarAvaliacoesForm">
+        <div><label>ID do Produto:</label><input type="number" name="produto_id"></div>
+        <button type="submit">Listar</button>
+    </form>
+    <h2>Criar Avaliação</h2>
+    <form id="criarAvaliacaoForm">
+        <div><label>ID do Produto:</label><input type="number" name="produto_id"></div>
+        <div><label>ID do Cliente:</label><input type="number" name="cliente_id"></div>
+        <div><label>Nota (1-5):</label><input type="number" name="nota"></div>
+        <div><label>Comentário:</label><textarea name="comentario"></textarea></div>
+        <button type="submit">Criar</button>
+    </form>
+    <h2>Resposta da API:</h2>
+    <div id="response"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
