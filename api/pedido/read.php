@@ -5,8 +5,8 @@ ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 // inclui banco e modelo
-include_once '../config/database.php';
-include_once '../models/Pedido.php'; // Ajuste caminho/nome conforme projeto
+include_once '../../config/database.php';
+include_once '../../models/Pedido.php'; // Ajuste caminho/nome conforme projeto
 
 $database = new Database();
 $db = $database->getConnection();
