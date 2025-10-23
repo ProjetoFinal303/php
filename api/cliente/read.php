@@ -1,27 +1,62 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-include_once '../../config/database.php';
-include_once '../../models/cliente.php';
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: *');
 
-$database = new Database();
-$db = $database->getConnection();
-$cliente = new Cliente($db);
-
-$result = $cliente->read();
-$num = $result->rowCount();
-
-if($num > 0) {
-    $clientes_arr = array();
-    $clientes_arr["records"] = array();
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        extract($row);
-        array_push($clientes_arr["records"], $row);
+try {
+    include_once '../../config/database.php';
+    include_once '../../models/cliente.php';
+    
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    if (!$db) {
+        http_response_code(500);
+        echo json_encode(array('message' => 'Erro interno do servidor.'));
+        exit;
     }
-    http_response_code(200);
-    echo json_encode($clientes_arr);
-} else {
-    http_response_code(404);
-    echo json_encode(array('message' => 'Nenhum cliente encontrado.'));
+    
+    $cliente = new Cliente($db);
+    
+    $result = $cliente->read();
+    
+    if (!$result) {
+        http_response_code(500);
+        echo json_encode(array('message' => 'Erro ao buscar clientes.'));
+        exit;
+    }
+    
+    $num = $result->rowCount();
+    
+    if ($num > 0) {
+        $clientes_arr = array();
+        $clientes_arr["records"] = array();
+        
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            // CRIT\u00cdCO: Remover senha e outros dados sens\u00edveis da resposta
+            $item = array(
+                'id' => $row['id'],
+                'nome' => $row['nome'],
+                'email' => $row['email'],
+                'contato' => $row['contato'],
+                'created_at' => isset($row['created_at']) ? $row['created_at'] : null
+                // senha removida por seguran\u00e7a - NUNCA deve ser retornada
+            );
+            
+            array_push($clientes_arr["records"], $item);
+        }
+        
+        http_response_code(200);
+        echo json_encode($clientes_arr);
+    } else {
+        http_response_code(404);
+        echo json_encode(array('message' => 'Nenhum cliente encontrado.'));
+    }
+    
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(array('message' => 'Erro interno do servidor.'));
+    error_log($e->getMessage());
 }
 ?>
