@@ -1,7 +1,7 @@
 <?php
 class Cliente {
     private $conn;
-    private $table_name = "Cliente";
+    private $table_name = "cliente";
 
     public $id;
     public $nome;
@@ -54,17 +54,14 @@ class Cliente {
     function create() {
         $query = "INSERT INTO " . $this->table_name . " SET nome=:nome, email=:email, contato=:contato, senha=:senha, role='user'";
         $stmt = $this->conn->prepare($query);
-
         $this->nome=htmlspecialchars(strip_tags($this->nome));
         $this->email=htmlspecialchars(strip_tags($this->email));
         $this->contato=htmlspecialchars(strip_tags($this->contato));
         $this->senha=password_hash(htmlspecialchars(strip_tags($this->senha)), PASSWORD_DEFAULT); // Criptografando a senha
-
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":contato", $this->contato);
         $stmt->bindParam(":senha", $this->senha);
-
         if($stmt->execute()) {
             return true;
         }
@@ -80,7 +77,6 @@ class Cliente {
         if (!empty($this->senha)) {
             $query .= ", senha = :senha";
         }
-
         // Adiciona o role à query apenas se um novo role for fornecido
         if (!empty($this->role)) {
             $query .= ", role = :role";
@@ -89,32 +85,27 @@ class Cliente {
         $query .= " WHERE id = :id";
         
         $stmt = $this->conn->prepare($query);
-
         // Limpa e associa os parâmetros obrigatórios
         $this->nome=htmlspecialchars(strip_tags($this->nome));
         $this->email=htmlspecialchars(strip_tags($this->email));
         $this->contato=htmlspecialchars(strip_tags($this->contato));
         $this->avatar_url=htmlspecialchars(strip_tags($this->avatar_url));
         $this->id=htmlspecialchars(strip_tags($this->id));
-
         $stmt->bindParam(':nome', $this->nome);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':contato', $this->contato);
         $stmt->bindParam(':avatar_url', $this->avatar_url);
         $stmt->bindParam(':id', $this->id);
-
         // Associa a senha apenas se ela existir
         if (!empty($this->senha)) {
             $this->senha=password_hash(htmlspecialchars(strip_tags($this->senha)), PASSWORD_DEFAULT);
             $stmt->bindParam(':senha', $this->senha);
         }
-
         // Associa o role apenas se ele existir
         if (!empty($this->role)) {
             $this->role=htmlspecialchars(strip_tags($this->role));
             $stmt->bindParam(':role', $this->role);
         }
-
         // Executa a query
         if($stmt->execute()) {
             return true;
@@ -127,7 +118,6 @@ class Cliente {
         $stmt = $this->conn->prepare($query);
         $this->id=htmlspecialchars(strip_tags($this->id));
         $stmt->bindParam(1, $this->id);
-
         if($stmt->execute()) {
             return true;
         }
