@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 // inclui banco e modelo
 include_once '../../config/database.php';
-include_once '../../models/Pedido.php'; // Ajuste caminho/nome conforme projeto
+include_once '../../models/pedido.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -24,5 +24,6 @@ $pedidos = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $pedidos[] = $row;
 }
+
 echo json_encode($pedidos);
 ?>
