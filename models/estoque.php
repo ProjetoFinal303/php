@@ -6,16 +6,16 @@ class Estoque {
     public $id;
     public $produto_id;
     public $quantidade;
-    public $data_atualizacao;
+    public $ultima_atualizacao;
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
     // Criar entrada de estoque
-    public function create() {
+  ultima_atualizacao  public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
-                  SET produto_id=:produto_id, 
+  ultima_atualizacao                SET produto_id=:produto_id, 
                       quantidade=:quantidade";
 
         $stmt = $this->conn->prepare($query);
@@ -34,11 +34,15 @@ class Estoque {
 
     // Ler todos os estoques
     public function read() {
-        $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
-                         e.quantidade, e.data_atualizacao
+        $query = "SELE        $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
+                         e.quantidade, e.ultima_atualizacao
                   FROM " . $this->table_name . " e
                   LEFT JOIN produtos p ON e.produto_id = p.id
-                  ORDER BY e.data_atualizacao DESC";
+                  ORDER BY e.ultima_atualizacao DESC";CT e.id, e.produto_id, p.nome as produto_nome, 
+                         e.quantidade, e.ultima_atualizacao
+                  FROM " . $this->table_name . " e
+                  LEFT JOIN produtos p ON e.produto_id = p.id
+                  ORDER BY e.ultima_atualizacao DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -48,7 +52,7 @@ class Estoque {
     // Ler um estoque específico
     public function readOne() {
         $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
-                         e.quantidade, e.data_atualizacao
+                         e.quantidade, e.ultima_atualizacao
                   FROM " . $this->table_name . " e
                   LEFT JOIN produtos p ON e.produto_id = p.id
                   WHERE e.id = :id
@@ -63,7 +67,7 @@ class Estoque {
         if($row) {
             $this->produto_id = $row['produto_id'];
             $this->quantidade = $row['quantidade'];
-            $this->data_atualizacao = $row['data_atualizacao'];
+            $this->ultima_atualizacao = $row['ultima_atualizacao'];
             return true;
         }
         return false;
@@ -106,7 +110,7 @@ class Estoque {
     // Buscar estoque por produto
     public function getByProduto() {
         $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
-                         e.quantidade, e.data_atualizacao
+                         e.quantidade, e.ultima_atualizacao
                   FROM " . $this->table_name . " e
                   LEFT JOIN produtos p ON e.produto_id = p.id
                   WHERE e.produto_id = :produto_id
