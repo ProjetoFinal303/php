@@ -32,9 +32,9 @@ class Estoque {
         return false;
     }
 
-    // Ler todos os estoques
-    public function read() {
-        $query = "SELE        $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
+            // Ler todos os estoques
+        public function read() {
+            $query = "SELECT e.id, e.produto_id, p.nome as produto_nome,
                          e.quantidade, e.ultima_atualizacao
                   FROM " . $this->table_name . " e
                   LEFT JOIN produtos p ON e.produto_id = p.id
