@@ -59,3 +59,52 @@ document.querySelectorAll('form').forEach(function(form) {
     }
   });
 });
+
+// Funções para listar dados
+async function listarProdutos() {
+  const resp = document.getElementById('response');
+  if (!resp) return;
+  try {
+    const response = await fetch('/php/api/produto/read.php', { method: 'GET' });
+    const json = await response.json();
+    resp.textContent = JSON.stringify(json, null, 2);
+  } catch (err) {
+    resp.textContent = 'Erro ao chamar a API: ' + err;
+  }
+}
+
+async function listarClientes() {
+  const resp = document.getElementById('response');
+  if (!resp) return;
+  try {
+    const response = await fetch('/php/api/cliente/read.php', { method: 'GET' });
+    const json = await response.json();
+    resp.textContent = JSON.stringify(json, null, 2);
+  } catch (err) {
+    resp.textContent = 'Erro ao chamar a API: ' + err;
+  }
+}
+
+async function listarPedidos() {
+  const resp = document.getElementById('response');
+  if (!resp) return;
+  try {
+    const response = await fetch('/php/api/pedido/read.php', { method: 'GET' });
+    const json = await response.json();
+    resp.textContent = JSON.stringify(json, null, 2);
+  } catch (err) {
+    resp.textContent = 'Erro ao chamar a API: ' + err;
+  }
+}
+
+async function listarEstoque() {
+  const resp = document.getElementById('response');
+  if (!resp) return;
+  try {
+    const response = await fetch('/php/api/estoque/read.php', { method: 'GET' });
+    const json = await response.json();
+    resp.textContent = JSON.stringify(json, null, 2);
+  } catch (err) {
+    resp.textContent = 'Erro ao chamar a API: ' + err;
+  }
+}
