@@ -34,6 +34,7 @@ document.querySelectorAll('form').forEach(function(form) {
     // PEDIDOS
     if (form.id === 'criarPedidoForm') url = '/php/api/pedido/create.php';
     if (form.id === 'atualizarPedidoForm') url = '/php/api/pedido/update.php';
+        if (form.id === 'atualizarStatusPedidoForm') url = '/php/api/pedido/update.php';
     if (form.id === 'deletarPedidoForm') url = '/php/api/pedido/delete.php';
     if (form.id === 'listarPedidosForm' || form.id === 'listarPedidosBtn') {
       url = '/php/api/pedido/read.php';
