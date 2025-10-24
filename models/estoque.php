@@ -38,11 +38,7 @@ class Estoque {
                          e.quantidade, e.ultima_atualizacao
                   FROM " . $this->table_name . " e
                   LEFT JOIN produtos p ON e.produto_id = p.id
-                  ORDER BY e.ultima_atualizacao DESC";CT e.id, e.produto_id, p.nome as produto_nome, 
-                         e.quantidade, e.ultima_atualizacao
-                  FROM " . $this->table_name . " e
-                  LEFT JOIN produtos p ON e.produto_id = p.id
-                  ORDER BY e.ultima_atualizacao DESC";
+                                      ORDER BY e.ultima_atualizacao DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
