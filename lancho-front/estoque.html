@@ -9,12 +9,25 @@
 <div class="container">
     <h1>Gerenciar Estoque</h1>
     <a href="index.html">Voltar</a>
+            <h2>Criar Estoque</h2>
+        <form id="criarEstoqueForm">
+            <div><label>ID do Produto:</label><input type="number" name="produto_id"></div>
+            <div><label>Quantidade:</label><input type="number" name="quantidade"></div>
+            <button type="submit">Criar</button>
+        </form>
+
     <h2>Atualizar Estoque de Produto</h2>
     <form id="atualizarEstoqueForm">
         <div><label>ID do Produto:</label><input type="number" name="id_produto"></div>
         <div><label>Nova Quantidade:</label><input type="number" name="quantidade"></div>
         <button type="submit">Atualizar</button>
     </form>
+    
+        <h2>Deletar Estoque</h2>
+        <form id="deletarEstoqueForm">
+            <div><label>ID do Estoque:</label><input type="number" name="id"></div>
+            <button type="submit">Deletar</button>
+        </form>
 
             <h2>Listar Estoque</h2>
         <button type="button" id="listarEstoqueBtn" onclick="listarEstoque()">Listar Todo o Estoque</button>
@@ -24,4 +37,5 @@
 <script src="script.js"></script>
 </body>
 </html>
+
 
