@@ -22,7 +22,7 @@ try {
         $produto->nome = $data->nome;
         $produto->descricao = $data->descricao;
         $produto->preco = $data->preco;
-        $produto->image_url = $data->image_url;
+        $produto->imagem_url = $data->imagem_url;
         $produto->stripe_price_id = $data->stripe_price_id;
 
         if($produto->update()) {
