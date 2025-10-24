@@ -42,6 +42,8 @@ document.querySelectorAll('form').forEach(function(form) {
     }
 
     // ESTOQUE
+        if (form.id === 'criarEstoqueForm') url = '/php/api/estoque/create.php';
+        if (form.id === 'deletarEstoqueForm') url = '/php/api/estoque/delete.php';
     if (form.id === 'atualizarEstoqueForm') url = '/php/api/estoque/update.php';
     if (form.id === 'listarEstoqueForm' || form.id === 'listarEstoqueBtn') {
       url = '/php/api/estoque/read.php';
