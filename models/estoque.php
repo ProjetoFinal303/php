@@ -15,8 +15,8 @@ class Estoque {
     // Criar entrada de estoque
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
-                                                SET produto_id=:produto_id,
-                                                quantidade=:quantidade";
+                SET produto_id=:produto_id,
+                    quantidade=:quantidade";
 
         $stmt = $this->conn->prepare($query);
 
@@ -32,13 +32,13 @@ class Estoque {
         return false;
     }
 
-            // Ler todos os estoques
-        public function read() {
-            $query = "SELECT e.id, e.produto_id, p.nome as produto_nome,
-                         e.quantidade, e.ultima_atualizacao
-                  FROM " . $this->table_name . " e
-                  LEFT JOIN produtos p ON e.produto_id = p.id
-                                      ORDER BY e.ultima_atualizacao DESC";
+    // Ler todos os estoques
+    public function read() {
+        $query = "SELECT e.id, e.produto_id, p.nome as produto_nome,
+                        e.quantidade, e.ultima_atualizacao
+                FROM " . $this->table_name . " e
+                LEFT JOIN produtos p ON e.produto_id = p.id
+                ORDER BY e.ultima_atualizacao DESC";
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -48,11 +48,11 @@ class Estoque {
     // Ler um estoque específico
     public function readOne() {
         $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
-                         e.quantidade, e.ultima_atualizacao
-                  FROM " . $this->table_name . " e
-                  LEFT JOIN produtos p ON e.produto_id = p.id
-                  WHERE e.id = :id
-                  LIMIT 0,1";
+                        e.quantidade, e.ultima_atualizacao
+                FROM " . $this->table_name . " e
+                LEFT JOIN produtos p ON e.produto_id = p.id
+                WHERE e.id = :id
+                LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $this->id);
@@ -72,8 +72,8 @@ class Estoque {
     // Atualizar estoque
     public function update() {
         $query = "UPDATE " . $this->table_name . " 
-                  SET quantidade=:quantidade
-                  WHERE id=:id";
+                SET quantidade=:quantidade
+                WHERE id=:id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -106,11 +106,11 @@ class Estoque {
     // Buscar estoque por produto
     public function getByProduto() {
         $query = "SELECT e.id, e.produto_id, p.nome as produto_nome, 
-                         e.quantidade, e.ultima_atualizacao
-                  FROM " . $this->table_name . " e
-                  LEFT JOIN produtos p ON e.produto_id = p.id
-                  WHERE e.produto_id = :produto_id
-                  LIMIT 0,1";
+                        e.quantidade, e.ultima_atualizacao
+                FROM " . $this->table_name . " e
+                LEFT JOIN produtos p ON e.produto_id = p.id
+                WHERE e.produto_id = :produto_id
+                LIMIT 0,1";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":produto_id", $this->produto_id);
