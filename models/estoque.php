@@ -13,10 +13,10 @@ class Estoque {
     }
 
     // Criar entrada de estoque
-  ultima_atualizacao  public function create() {
+    public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
-  ultima_atualizacao                SET produto_id=:produto_id, 
-                      quantidade=:quantidade";
+                                                SET produto_id=:produto_id,
+                                                quantidade=:quantidade";
 
         $stmt = $this->conn->prepare($query);
 
