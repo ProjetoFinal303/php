@@ -1,10 +1,10 @@
 <?php
-header('Content-Type: application/json');
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: *');
 
@@ -17,7 +17,7 @@ try {
     
     if (!$db) {
         http_response_code(500);
-        echo json_encode(array('message' => 'Erro interno do servidor.'));
+        echo json_encode(array('message' => 'Erro interno do servidor (DB).'));
         exit;
     }
     
@@ -76,7 +76,7 @@ try {
     
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(array('message' => 'Erro interno do servidor.'));
+    echo json_encode(array('message' => 'Erro interno do servidor.', 'error' => $e->getMessage()));
     error_log($e->getMessage());
 }
 ?>
