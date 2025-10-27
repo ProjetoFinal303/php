@@ -1,14 +1,12 @@
 <?php
-// Headers
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: DELETE"); // CORREÇÃO: Alterado de POST para DELETE
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
 try {
     include_once '../../config/database.php';
@@ -25,32 +23,37 @@ try {
     
     $estoque = new Estoque($db);
     
-    $input = file_get_contents("php://input");
-    $data = json_decode($input);
+    $data = json_decode(file_get_contents("php://input"));
     
     if (json_last_error() !== JSON_ERROR_NONE) {
         http_response_code(400);
         echo json_encode(array('message' => 'Dados JSON inválidos.'));
         exit;
     }
-
-    if(!empty($data->id)){
-        $estoque->id = $data->id;
-        
-        if($estoque->delete()){
-            http_response_code(200);
-            echo json_encode(array("message" => "Estoque deletado com sucesso."));
-        }
-        else{
-            http_response_code(503);
-            echo json_encode(array("message" => "Não foi possível deletar o estoque."));
-        }
-    }
-    else{
+    
+    // Validar parâmetro id
+    if (empty($data->id)) {
         http_response_code(400);
-        echo json_encode(array("message" => "Dados incompletos. ID é obrigatório."));
+        echo json_encode(array('message' => 'ID do estoque não fornecido.'));
+        exit;
     }
-
+    
+    // Validar se id é numérico
+    if (!is_numeric($data->id)) {
+        http_response_code(400);
+        echo json_encode(array('message' => 'ID do estoque deve ser numérico.'));
+        exit;
+    }
+    
+    $estoque->id = intval($data->id);
+    
+    if ($estoque->delete()) {
+        http_response_code(200);
+        echo json_encode(array('message' => 'Estoque deletado com sucesso.'));
+    } else {
+        http_response_code(503);
+        echo json_encode(array('message' => 'Não foi possível deletar o estoque.'));
+    }
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(array('message' => 'Erro interno do servidor.', 'error' => $e->getMessage()));
