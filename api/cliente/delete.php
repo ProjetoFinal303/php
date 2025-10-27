@@ -45,7 +45,7 @@ try {
     $cliente->id = intval($data->id);
     
     // Verificar se o cliente existe antes de tentar deletar
-    if (!$cliente->read_single()) {
+    if (!$cliente->readOne()) {
         http_response_code(404);
         echo json_encode(array('message' => 'Cliente não encontrado.'));
         exit;
