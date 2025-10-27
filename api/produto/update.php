@@ -22,7 +22,10 @@ try {
         $produto->nome = $data->nome;
         $produto->descricao = $data->descricao;
         $produto->preco = $data->preco;
-        $produto->imagem_url = $data->imagem_url;
+        
+        // CORREÇÃO: Atribuir $data->image_url (front-end) para $produto->imagem_url (modelo)
+        $produto->imagem_url = $data->image_url;
+        
         $produto->stripe_price_id = $data->stripe_price_id;
 
         if($produto->update()) {
