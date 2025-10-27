@@ -10,13 +10,17 @@ CREATE TABLE IF NOT EXISTS produtos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- TABELA DE CLIENTES CORRIGIDA para corresponder às APIs
 CREATE TABLE IF NOT EXISTS clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    telefone VARCHAR(20),
-    endereco TEXT,
+    contato VARCHAR(50), -- Trocado de 'telefone' para 'contato'
+    senha VARCHAR(255) NOT NULL, -- Adicionado campo de senha
+    avatar_url VARCHAR(500), -- Adicionado avatar
+    role VARCHAR(50) DEFAULT 'cliente', -- Adicionado role
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -- 'endereco' foi removido pois nenhuma API o utilizava, mas pode ser readicionado se necessário
 );
 
 CREATE TABLE IF NOT EXISTS pedidos (
@@ -37,4 +41,16 @@ CREATE TABLE IF NOT EXISTS estoque (
     quantidade INT NOT NULL DEFAULT 0,
     ultima_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE
+);
+
+-- Adicionar tabela de Avaliações (necessária para o Módulo de Avaliações)
+CREATE TABLE IF NOT EXISTS avaliacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    cliente_id INT NOT NULL,
+    nota INT NOT NULL,
+    comentario TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE CASCADE
 );
