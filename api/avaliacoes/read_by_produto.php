@@ -73,7 +73,6 @@ try {
         http_response_code(404);
         echo json_encode(array('message' => 'Nenhuma avaliação encontrada.'));
     }
-    
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(array('message' => 'Erro interno do servidor.', 'error' => $e->getMessage()));
