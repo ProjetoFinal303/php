@@ -20,7 +20,10 @@ try {
         $produto->nome = $data->nome;
         $produto->descricao = isset($data->descricao) ? $data->descricao : '';
         $produto->preco = $data->preco;
-        $produto->image_url = isset($data->image_url) ? $data->image_url : '';
+        
+        // CORREÇÃO: Atribuir $data->image_url (front-end) para $produto->imagem_url (modelo)
+        $produto->imagem_url = isset($data->image_url) ? $data->image_url : ''; 
+        
         $produto->stripe_price_id = isset($data->stripe_price_id) ? $data->stripe_price_id : '';
 
         if($produto->create()) {
