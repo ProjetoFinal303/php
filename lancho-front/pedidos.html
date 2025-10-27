@@ -9,31 +9,42 @@
 <div class="container">
     <h1>Gerenciar Pedidos</h1>
     <a href="index.html">Voltar</a>
+    
     <h2>Criar Pedido</h2>
     <form id="criarPedidoForm">
-        <div><label>ID do Cliente:</label><input type="number" name="id_cliente"></div>
-        <div><label>Descrição:</label><input type="text" name="descricao"></div>
-        <div><label>Valor:</label><input type="number" name="valor"></div>
+        <div><label>ID do Cliente:</label> <input type="number" name="cliente_id" required></div>
+        <div><label>ID do Produto:</label> <input type="number" name="produto_id" required></div>
+        <div><label>Quantidade:</label> <input type="number" name="quantidade" required></div>
+        <div><label>Preço Total:</label> <input type="number" step="0.01" name="preco_total" required></div>
+        <div><label>Status:</label> <input type="text" name="status" value="pendente"></div>
         <button type="submit">Criar</button>
     </form>
+    
     <h2>Atualizar Status do Pedido</h2>
     <form id="atualizarStatusPedidoForm">
-        <div><label>ID do Pedido:</label><input type="number" name="id"></div>
-        <div><label>Novo Status:</label><input type="text" name="status"></div>
+        <div><label>ID do Pedido:</label> <input type="number" name="id" required></div>
+        <div><label>Novo Status:</label> <input type="text" name="status" required></div>
         <button type="submit">Atualizar</button>
     </form>
+    
     <h2>Deletar Pedido</h2>
     <form id="deletarPedidoForm">
-        <div><label>ID do Pedido:</label><input type="number" name="id"></div>
+        <div><label>ID do Pedido:</label> <input type="number" name="id" required></div>
         <button type="submit">Deletar</button>
     </form>
-
-            <h2>Listar Pedidos</h2>
-        <button type="button" id="listarPedidosBtn" onclick="listarPedidos()">Listar Todos os Pedidos</button>
+    
+    <h2>Listar Pedidos</h2>
+    <button type="button" id="listarPedidosBtn" onclick="listarPedidos()">Listar Todos os Pedidos</button>
+    
+    <h2>Listar Pedidos por Cliente</h2>
+    <form id="listarPedidosClienteForm">
+        <div><label>ID do Cliente:</label> <input type="number" name="cliente_id" required></div>
+        <button type="submit">Buscar Pedidos</button>
+    </form>
+    
     <h2>Resposta da API:</h2>
     <div id="response"></div>
 </div>
 <script src="script.js"></script>
 </body>
 </html>
-
