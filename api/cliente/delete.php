@@ -1,10 +1,10 @@
 <?php
-header('Content-Type: application/json');
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Headers: *');
 
@@ -17,7 +17,7 @@ try {
     
     if (!$db) {
         http_response_code(500);
-        echo json_encode(array('message' => 'Erro interno do servidor.'));
+        echo json_encode(array('message' => 'Erro interno do servidor (DB).'));
         exit;
     }
     
@@ -32,14 +32,12 @@ try {
         exit;
     }
     
-    // Validar se ID foi fornecido
     if (empty($data->id)) {
         http_response_code(400);
         echo json_encode(array('message' => 'ID do cliente é obrigatório.'));
         exit;
     }
     
-    // Validar se ID é numérico
     if (!is_numeric($data->id)) {
         http_response_code(400);
         echo json_encode(array('message' => 'ID do cliente deve ser numérico.'));
@@ -48,7 +46,6 @@ try {
     
     $cliente->id = intval($data->id);
     
-    // Verificar se o cliente existe antes de tentar deletar
     if (!$cliente->readOne()) {
         http_response_code(404);
         echo json_encode(array('message' => 'Cliente não encontrado.'));
@@ -65,7 +62,7 @@ try {
     
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(array('message' => 'Erro interno do servidor.'));
+    echo json_encode(array('message' => 'Erro interno do servidor.', 'error' => $e->getMessage()));
     error_log($e->getMessage());
 }
 ?>
