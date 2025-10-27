@@ -30,19 +30,29 @@ try {
         echo json_encode(['message' => 'Dados JSON inválidos.']);
         exit;
     }
-
-    if(!empty($data->id)) {
-        $produto->id = $data->id;
-        if($produto->delete()) {
-            http_response_code(200);
-            echo json_encode(['message' => 'Produto apagado com sucesso.']);
-        } else {
-            http_response_code(503);
-            echo json_encode(['message' => 'Não foi possível apagar o produto.']);
-        }
-    } else {
+    
+    // Validar parâmetro id
+    if (empty($data->id)) {
         http_response_code(400);
         echo json_encode(['message' => 'ID do produto não fornecido.']);
+        exit;
+    }
+    
+    // Validar se id é numérico
+    if (!is_numeric($data->id)) {
+        http_response_code(400);
+        echo json_encode(['message' => 'ID do produto deve ser numérico.']);
+        exit;
+    }
+    
+    $produto->id = intval($data->id);
+    
+    if ($produto->delete()) {
+        http_response_code(200);
+        echo json_encode(['message' => 'Produto apagado com sucesso.']);
+    } else {
+        http_response_code(503);
+        echo json_encode(['message' => 'Não foi possível apagar o produto.']);
     }
 } catch (Exception $e) {
     http_response_code(500);
