@@ -36,7 +36,7 @@ class Produto {
         $stmt->bindParam(":preco", $this->preco);
         $stmt->bindParam(":imagem_url", $this->imagem_url);
         $stmt->bindParam(":stripe_price_id", $this->stripe_price_id);
-
+        
         if($stmt->execute()) {
             return true;
         }
@@ -44,9 +44,19 @@ class Produto {
     }
 
     function update() {
-        $query = "UPDATE " . $this->table_name . " SET nome = :nome, descricao = :descricao, preco = :preco, imagem_url = :imagem_url, stripe_price_id = :stripe_price_id WHERE id = :id";
+        $query = "UPDATE " . $this->table_name . " 
+                  SET 
+                      nome = :nome, 
+                      descricao = :descricao, 
+                      preco = :preco, 
+                      imagem_url = :imagem_url, 
+                      stripe_price_id = :stripe_price_id 
+                  WHERE 
+                      id = :id";
+        
         $stmt = $this->conn->prepare($query);
 
+        // Sanitizar dados
         $this->nome = htmlspecialchars(strip_tags($this->nome));
         $this->descricao = htmlspecialchars(strip_tags($this->descricao));
         $this->preco = htmlspecialchars(strip_tags($this->preco));
@@ -54,6 +64,7 @@ class Produto {
         $this->stripe_price_id = htmlspecialchars(strip_tags($this->stripe_price_id));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
+        // Vincular dados
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":descricao", $this->descricao);
         $stmt->bindParam(":preco", $this->preco);
@@ -61,10 +72,25 @@ class Produto {
         $stmt->bindParam(":stripe_price_id", $this->stripe_price_id);
         $stmt->bindParam(":id", $this->id);
 
-        if($stmt->execute()) {
-            return true;
+        // *** BLOCO DE EXECUÇÃO ATUALIZADO ***
+        try {
+            if($stmt->execute()) {
+                // Verificar se alguma linha foi realmente afetada
+                if ($stmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    // Query executou, mas nenhuma linha mudou (talvez o ID não exista)
+                    error_log("MODELO PRODUTO->update(): Query executada mas 0 linhas afetadas. ID: " . $this->id);
+                    return false; 
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Captura o erro do SQL (habilitado pela Ação 1)
+            error_log("MODELO PRODUTO->update() ERRO: " . $e->getMessage());
+            return false;
         }
-        return false;
     }
 
     function delete() {
@@ -74,10 +100,25 @@ class Produto {
         $this->id = htmlspecialchars(strip_tags($this->id));
         $stmt->bindParam(":id", $this->id);
 
-        if($stmt->execute()) {
-            return true;
+        // *** BLOCO DE EXECUÇÃO ATUALIZADO ***
+        try {
+            if($stmt->execute()) {
+                // Verificar se alguma linha foi realmente afetada
+                if ($stmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    // Query executou, mas nenhuma linha mudou (ID não existe)
+                    error_log("MODELO PRODUTO->delete(): Query executada mas 0 linhas afetadas. ID: " . $this->id);
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            // Captura o erro do SQL (habilitado pela Ação 1)
+            error_log("MODELO PRODUTO->delete() ERRO: " . $e->getMessage());
+            return false;
         }
-        return false;
     }
 }
 ?>
