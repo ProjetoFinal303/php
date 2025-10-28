@@ -11,8 +11,10 @@ document.querySelectorAll('form').forEach(function(form) {
     let url = '';
     let method = 'POST';
     
-    // PRODUTOS
-    if (form.id === 'criarProdutoForm') url = '/php/api/produto/create.php';
+    // PRODUTOS (CORRIGIDO - URLs re-digitadas para limpar caracteres ocultos)
+    if (form.id === 'criarProdutoForm') {
+        url = '/php/api/produto/create.php';
+    }
     if (form.id === 'atualizarProdutoForm') {
         url = '/php/api/produto/update.php';
         method = 'POST';
