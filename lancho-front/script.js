@@ -18,7 +18,7 @@ document.querySelectorAll('form').forEach(function(form) {
         method = 'PUT';
     }
     if (form.id === 'deletarProdutoForm') {
-        url = '/php/api/produto/delete.php';
+        url = '/php/api/produto/delete.php?id=' + data.id;
         method = 'DELETE';
     }
     if (form.id === 'listarProdutosForm' || form.id === 'listarProdutosBtn') {
@@ -33,7 +33,7 @@ document.querySelectorAll('form').forEach(function(form) {
         method = 'PUT';
     }
     if (form.id === 'deletarClienteForm') {
-        url = '/php/api/cliente/delete.php';
+        url = '/php/api/cliente/delete.php?id=' + data.id;
         method = 'DELETE';
     }
     if (form.id === 'listarClientesForm' || form.id === 'listarClientesBtn') {
@@ -52,7 +52,7 @@ document.querySelectorAll('form').forEach(function(form) {
         method = 'PUT';
     }
     if (form.id === 'deletarPedidoForm') {
-        url = '/php/api/pedido/delete.php';
+        url = '/php/api/pedido/delete.php?id=' + data.id;
         method = 'DELETE';
     }
     if (form.id === 'listarPedidosForm' || form.id === 'listarPedidosBtn') {
@@ -62,35 +62,41 @@ document.querySelectorAll('form').forEach(function(form) {
     
     // ESTOQUE
     if (form.id === 'criarEstoqueForm') url = '/php/api/estoque/create.php';
-    if (form.id === 'deletarEstoqueForm') {
-        url = '/php/api/estoque/delete.php';
-        method = 'DELETE';
-    }
     if (form.id === 'atualizarEstoqueForm') {
         url = '/php/api/estoque/update.php';
         method = 'PUT';
     }
-    if (form.id === 'listarEstoqueForm' || form.id === 'listarEstoqueBtn') {
+    if (form.id === 'deletarEstoqueForm') {
+        url = '/php/api/estoque/delete.php?id=' + data.id;
+        method = 'DELETE';
+    }
+    if (form.id === 'listarEstoqueForm') {
       url = '/php/api/estoque/read.php';
       method = 'GET';
     }
     
-    // AVALIAÇÕES
-    if (form.id === 'criarAvaliacaoForm') {
-        url = '/php/api/avaliacoes/create.php';
-        method = 'POST';
+    // AVALIACOES
+    if (form.id === 'criarAvaliacaoForm') url = '/php/api/avaliacao/create.php';
+    if (form.id === 'atualizarAvaliacaoForm') {
+        url = '/php/api/avaliacao/update.php';
+        method = 'PUT';
+    }
+    if (form.id === 'deletarAvaliacaoForm') {
+        url = '/php/api/avaliacao/delete.php?id=' + data.id;
+        method = 'DELETE';
     }
     if (form.id === 'listarAvaliacoesForm') {
-        url = `/php/api/avaliacoes/read_by_produto.php?produto_id=${data.produto_id}`;
-        method = 'GET';
+      url = '/php/api/avaliacao/read.php';
+      method = 'GET';
     }
     
+    if (!url) return;
     try {
       const options = { method: method, headers: { 'Content-Type': 'application/json' } };
-      if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
-          options.body = JSON.stringify(data);
+      if (method !== 'GET' && method !== 'DELETE') {
+        options.body = JSON.stringify(data);
       }
-      if (form.id === 'listarAvaliacoesForm') {
+      if (method === 'GET' || form.id === 'listarAvaliacoesForm') {
           delete options.body;
       }
       const response = await fetch(url, options);
