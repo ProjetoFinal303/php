@@ -2,7 +2,6 @@ document.querySelectorAll('form').forEach(function(form) {
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     var resp = document.getElementById('response');
-    // Se não achar o elemento de resposta, tenta achar por classe em outra div (OPCIONAL)
     if (!resp) resp = form.querySelector('.response');
     if (!resp) return;
     const formData = new FormData(form);
@@ -11,7 +10,6 @@ document.querySelectorAll('form').forEach(function(form) {
     let url = '';
     let method = 'POST';
     
-    // PRODUTOS (CORRIGIDO - URLs re-digitadas para limpar caracteres ocultos)
     if (form.id === 'criarProdutoForm') {
         url = '/php/api/produto/create.php';
     }
@@ -30,8 +28,9 @@ document.querySelectorAll('form').forEach(function(form) {
       method = 'GET';
     }
     
-    // CLIENTES
-    if (form.id === 'criarClienteForm') url = '/php/api/cliente/create.php';
+    if (form.id === 'criarClienteForm') {
+        url = '/php/api/cliente/create.php';
+    }
     if (form.id === 'atualizarClienteForm') {
         url = '/php/api/cliente/update.php';
         method = 'POST';
@@ -47,8 +46,9 @@ document.querySelectorAll('form').forEach(function(form) {
       method = 'GET';
     }
     
-    // PEDIDOS
-    if (form.id === 'criarPedidoForm') url = '/php/api/pedido/create.php';
+    if (form.id === 'criarPedidoForm') {
+        url = '/php/api/pedido/create.php';
+    }
     if (form.id === 'atualizarPedidoForm') {
         url = '/php/api/pedido/update.php';
         method = 'POST';
@@ -69,8 +69,9 @@ document.querySelectorAll('form').forEach(function(form) {
       method = 'GET';
     }
     
-    // ESTOQUE
-    if (form.id === 'criarEstoqueForm') url = '/php/api/estoque/create.php';
+    if (form.id === 'criarEstoqueForm') {
+        url = '/php/api/estoque/create.php';
+    }
     if (form.id === 'atualizarEstoqueForm') {
         url = '/php/api/estoque/update.php';
         method = 'POST';
@@ -86,8 +87,9 @@ document.querySelectorAll('form').forEach(function(form) {
       method = 'GET';
     }
     
-    // AVALIACOES
-    if (form.id === 'criarAvaliacaoForm') url = '/php/api/avaliacao/create.php';
+    if (form.id === 'criarAvaliacaoForm') {
+        url = '/php/api/avaliacao/create.php';
+    }
     if (form.id === 'atualizarAvaliacaoForm') {
         url = '/php/api/avaliacao/update.php';
         method = 'POST';
@@ -117,7 +119,7 @@ document.querySelectorAll('form').forEach(function(form) {
     }
   });
 });
-// Funções para listar dados
+
 async function listarProdutos() {
   const resp = document.getElementById('response');
   if (!resp) return;
@@ -129,6 +131,7 @@ async function listarProdutos() {
     resp.textContent = 'Erro ao chamar a API: ' + err;
   }
 }
+
 async function listarClientes() {
   const resp = document.getElementById('response');
   if (!resp) return;
@@ -140,6 +143,7 @@ async function listarClientes() {
     resp.textContent = 'Erro ao chamar a API: ' + err;
   }
 }
+
 async function listarPedidos() {
   const resp = document.getElementById('response');
   if (!resp) return;
@@ -151,6 +155,7 @@ async function listarPedidos() {
     resp.textContent = 'Erro ao chamar a API: ' + err;
   }
 }
+
 async function listarEstoque() {
   const resp = document.getElementById('response');
   if (!resp) return;
