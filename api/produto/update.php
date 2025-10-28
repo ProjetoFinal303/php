@@ -1,12 +1,12 @@
 <?php
-// Correção automática: Adicionado tratamento de erros e mapeamento consistente de image_url/imagem_url
+// Alteração: Aceita POST além de PUT para atualização
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: PUT');
+header('Access-Control-Allow-Methods: POST, PUT');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 try {
