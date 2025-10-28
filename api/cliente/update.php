@@ -1,4 +1,6 @@
 <?php
+// Correção automática: header + tratamento JSON + suppression de erro + compatibilidade image_url/imagem_url
+
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
