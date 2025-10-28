@@ -15,11 +15,13 @@ document.querySelectorAll('form').forEach(function(form) {
     if (form.id === 'criarProdutoForm') url = '/php/api/produto/create.php';
     if (form.id === 'atualizarProdutoForm') {
         url = '/php/api/produto/update.php';
-        method = 'PUT';
+        method = 'POST';
+        data.action = 'update';
     }
     if (form.id === 'deletarProdutoForm') {
-        url = '/php/api/produto/delete.php?id=' + data.id;
-        method = 'DELETE';
+        url = '/php/api/produto/delete.php';
+        method = 'POST';
+        data.action = 'delete';
     }
     if (form.id === 'listarProdutosForm' || form.id === 'listarProdutosBtn') {
       url = '/php/api/produto/read.php';
@@ -30,11 +32,13 @@ document.querySelectorAll('form').forEach(function(form) {
     if (form.id === 'criarClienteForm') url = '/php/api/cliente/create.php';
     if (form.id === 'atualizarClienteForm') {
         url = '/php/api/cliente/update.php';
-        method = 'PUT';
+        method = 'POST';
+        data.action = 'update';
     }
     if (form.id === 'deletarClienteForm') {
-        url = '/php/api/cliente/delete.php?id=' + data.id;
-        method = 'DELETE';
+        url = '/php/api/cliente/delete.php';
+        method = 'POST';
+        data.action = 'delete';
     }
     if (form.id === 'listarClientesForm' || form.id === 'listarClientesBtn') {
       url = '/php/api/cliente/read.php';
@@ -45,15 +49,18 @@ document.querySelectorAll('form').forEach(function(form) {
     if (form.id === 'criarPedidoForm') url = '/php/api/pedido/create.php';
     if (form.id === 'atualizarPedidoForm') {
         url = '/php/api/pedido/update.php';
-        method = 'PUT';
+        method = 'POST';
+        data.action = 'update';
     }
     if (form.id === 'atualizarStatusPedidoForm') {
         url = '/php/api/pedido/update_status.php';
-        method = 'PUT';
+        method = 'POST';
+        data.action = 'update';
     }
     if (form.id === 'deletarPedidoForm') {
-        url = '/php/api/pedido/delete.php?id=' + data.id;
-        method = 'DELETE';
+        url = '/php/api/pedido/delete.php';
+        method = 'POST';
+        data.action = 'delete';
     }
     if (form.id === 'listarPedidosForm' || form.id === 'listarPedidosBtn') {
       url = '/php/api/pedido/read.php';
@@ -64,11 +71,13 @@ document.querySelectorAll('form').forEach(function(form) {
     if (form.id === 'criarEstoqueForm') url = '/php/api/estoque/create.php';
     if (form.id === 'atualizarEstoqueForm') {
         url = '/php/api/estoque/update.php';
-        method = 'PUT';
+        method = 'POST';
+        data.action = 'update';
     }
     if (form.id === 'deletarEstoqueForm') {
-        url = '/php/api/estoque/delete.php?id=' + data.id;
-        method = 'DELETE';
+        url = '/php/api/estoque/delete.php';
+        method = 'POST';
+        data.action = 'delete';
     }
     if (form.id === 'listarEstoqueForm') {
       url = '/php/api/estoque/read.php';
@@ -79,11 +88,13 @@ document.querySelectorAll('form').forEach(function(form) {
     if (form.id === 'criarAvaliacaoForm') url = '/php/api/avaliacao/create.php';
     if (form.id === 'atualizarAvaliacaoForm') {
         url = '/php/api/avaliacao/update.php';
-        method = 'PUT';
+        method = 'POST';
+        data.action = 'update';
     }
     if (form.id === 'deletarAvaliacaoForm') {
-        url = '/php/api/avaliacao/delete.php?id=' + data.id;
-        method = 'DELETE';
+        url = '/php/api/avaliacao/delete.php';
+        method = 'POST';
+        data.action = 'delete';
     }
     if (form.id === 'listarAvaliacoesForm') {
       url = '/php/api/avaliacao/read.php';
@@ -93,11 +104,8 @@ document.querySelectorAll('form').forEach(function(form) {
     if (!url) return;
     try {
       const options = { method: method, headers: { 'Content-Type': 'application/json' } };
-      if (method !== 'GET' && method !== 'DELETE') {
+      if (method !== 'GET') {
         options.body = JSON.stringify(data);
-      }
-      if (method === 'GET' || form.id === 'listarAvaliacoesForm') {
-          delete options.body;
       }
       const response = await fetch(url, options);
       const json = await response.json();
@@ -107,7 +115,6 @@ document.querySelectorAll('form').forEach(function(form) {
     }
   });
 });
-
 // Funções para listar dados
 async function listarProdutos() {
   const resp = document.getElementById('response');
@@ -120,7 +127,6 @@ async function listarProdutos() {
     resp.textContent = 'Erro ao chamar a API: ' + err;
   }
 }
-
 async function listarClientes() {
   const resp = document.getElementById('response');
   if (!resp) return;
@@ -132,7 +138,6 @@ async function listarClientes() {
     resp.textContent = 'Erro ao chamar a API: ' + err;
   }
 }
-
 async function listarPedidos() {
   const resp = document.getElementById('response');
   if (!resp) return;
@@ -144,7 +149,6 @@ async function listarPedidos() {
     resp.textContent = 'Erro ao chamar a API: ' + err;
   }
 }
-
 async function listarEstoque() {
   const resp = document.getElementById('response');
   if (!resp) return;
