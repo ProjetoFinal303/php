@@ -24,13 +24,16 @@ try {
     
     $produto = new Produto($db);
     
-    // Obter ID do JSON body (POST) ou query string (DELETE/GET para compatibilidade)
+    // Obter ID do JSON body (POST)
     $id = null;
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $input = file_get_contents("php://input");
-        $data = json_decode($input, true);
+        $data = json_decode($input, true); // 'true' para array
         
+        // Adiciona log para depuração
+        error_log("DELETE.PHP RECEBIDO: " . json_encode($data));
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             http_response_code(400);
             echo json_encode(['message' => 'JSON inválido: ' . json_last_error_msg()]);
@@ -39,8 +42,9 @@ try {
         
         $id = $data['id'] ?? null;
     } else {
-        // Para DELETE/GET, aceita query string
+        // Para DELETE/GET, aceita query string (compatibilidade)
         $id = $_REQUEST['id'] ?? null;
+        error_log("DELETE.PHP (GET/REQUEST) RECEBIDO: " . $id);
     }
     
     // Validar parâmetro id
@@ -56,6 +60,7 @@ try {
         http_response_code(200);
         echo json_encode(['message' => 'Produto deletado com sucesso.']);
     } else {
+        error_log("DELETE.PHP FALHOU: Erro ao executar \$produto->delete() para ID: " . $id);
         http_response_code(400);
         echo json_encode(['message' => 'Erro ao deletar produto.']);
     }
