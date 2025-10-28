@@ -5,7 +5,8 @@ ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: PUT, PATCH');
+// CORREÇÃO: Permitir POST, que é como o script.js está enviando agora
+header('Access-Control-Allow-Methods: POST, PUT, PATCH');
 header('Access-Control-Allow-Headers: *');
 
 try {
@@ -35,7 +36,7 @@ try {
     // Verificar se está usando produto_id ou id
     if (!empty($data->produto_id)) {
         // Atualizar por produto_id
-        if (empty($data->quantidade)) {
+        if (!isset($data->quantidade)) { // Permite quantidade 0
             http_response_code(400);
             echo json_encode(array('message' => 'Quantidade é obrigatória.'));
             exit;
@@ -53,7 +54,7 @@ try {
         }
     } elseif (!empty($data->id)) {
         // Atualizar por id
-        if (empty($data->quantidade)) {
+        if (!isset($data->quantidade)) { // Permite quantidade 0
             http_response_code(400);
             echo json_encode(array('message' => 'Quantidade é obrigatória.'));
             exit;
@@ -64,6 +65,13 @@ try {
             $estoque->produto_id = $data->produto_id;
         }
         $estoque->quantidade = $data->quantidade;
+        
+        // O método update() do seu modelo espera produto_id, vamos garantir que ele esteja lá
+        if (empty($estoque->produto_id)) {
+             http_response_code(400);
+             echo json_encode(array('message' => 'produto_id é obrigatório ao atualizar por ID do estoque.'));
+             exit;
+        }
         
         if ($estoque->update()) {
             http_response_code(200);
