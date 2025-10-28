@@ -21,8 +21,8 @@ try {
         $produto->descricao = isset($data->descricao) ? $data->descricao : '';
         $produto->preco = $data->preco;
         
-        // CORREÇÃO: Atribuir $data->image_url (front-end) para $produto->imagem_url (modelo)
-        $produto->imagem_url = isset($data->image_url) ? $data->image_url : ''; 
+        // CORREÇÃO: Simplificado para ler apenas 'imagem_url'
+        $produto->imagem_url = isset($data->imagem_url) ? $data->imagem_url : ''; 
         
         $produto->stripe_price_id = isset($data->stripe_price_id) ? $data->stripe_price_id : '';
 
