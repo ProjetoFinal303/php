@@ -13,6 +13,11 @@ class Database {
         try {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->exec("set names utf8");
+            
+            // *** LINHA CRÍTICA ADICIONADA ABAIXO ***
+            // Força o PDO a lançar exceções em caso de erro de SQL
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
         } catch(PDOException $exception) {
             header('Content-Type: application/json');
             echo json_encode(array("success" => false, "message" => "Erro de conexão: " . $exception->getMessage()));
