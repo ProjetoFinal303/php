@@ -1,11 +1,12 @@
 <?php
+// Alteração: Aceita POST além de PUT e PATCH para atualização
 header('Content-Type: application/json');
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: PUT, PATCH');
+header('Access-Control-Allow-Methods: POST, PUT, PATCH');
 header('Access-Control-Allow-Headers: *');
 
 try {
