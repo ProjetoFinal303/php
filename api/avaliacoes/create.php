@@ -23,6 +23,7 @@ try {
     
     $avaliacao = new Avaliacao($db);
     
+    // Obter e decodificar o input JSON
     $input = file_get_contents("php://input");
     $data = json_decode($input);
     
@@ -32,7 +33,7 @@ try {
         exit;
     }
     
-    // Validar parâmetros
+    // Validar parâmetros usando ?? null DENTRO do try
     $produto_id = $data->produto_id ?? null;
     $cliente_id = $data->cliente_id ?? null;
     $nota = $data->nota ?? null;
@@ -40,6 +41,13 @@ try {
     if (empty($produto_id) || empty($cliente_id) || empty($nota)) {
         http_response_code(400);
         echo json_encode(['message' => 'Produto ID, Cliente ID e Nota são obrigatórios.']);
+        exit;
+    }
+    
+    // Validar se são numéricos
+    if (!is_numeric($produto_id) || !is_numeric($cliente_id) || !is_numeric($nota)) {
+        http_response_code(400);
+        echo json_encode(['message' => 'IDs e nota devem ser numéricos.']);
         exit;
     }
     
@@ -55,7 +63,6 @@ try {
         http_response_code(503);
         echo json_encode(['message' => 'Não foi possível criar a avaliação.']);
     }
-    
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['message' => 'Erro: ' . $e->getMessage()]);
