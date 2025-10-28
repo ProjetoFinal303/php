@@ -1,4 +1,5 @@
 <?php
+// Correção automática: Adicionado tratamento de erros e mapeamento consistente de image_url/imagem_url
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
@@ -31,7 +32,7 @@ try {
         echo json_encode(['message' => 'Dados JSON inválidos.']);
         exit;
     }
-
+    
     if (!empty($data->id)) {
         $produto->id = $data->id;
         
@@ -44,7 +45,7 @@ try {
         $produto->nome = $data->nome;
         $produto->descricao = isset($data->descricao) ? $data->descricao : '';
         $produto->preco = $data->preco;
-        $produto->imagem_url = isset($data->image_url) ? $data->image_url : '';
+        $produto->imagem_url = isset($data->image_url) ? $data->image_url : (isset($data->imagem_url) ? $data->imagem_url : '');
         $produto->stripe_price_id = isset($data->stripe_price_id) ? $data->stripe_price_id : '';
         
         if ($produto->update()) {
