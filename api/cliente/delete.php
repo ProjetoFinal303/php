@@ -1,68 +1,61 @@
 <?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');
-header('Access-Control-Allow-Headers: *');
-
 try {
-    include_once '../../config/database.php';
-    include_once '../../models/cliente.php';
+    require_once '../../config/database.php';
+    require_once '../../models/cliente.php';
     
     $database = new Database();
     $db = $database->getConnection();
     
     if (!$db) {
         http_response_code(500);
-        echo json_encode(array('message' => 'Erro interno do servidor (DB).'));
+        echo json_encode(['message' => 'Erro interno do servidor (DB).']);
         exit;
     }
     
     $cliente = new Cliente($db);
     
-    $input = file_get_contents("php://input");
-    $data = json_decode($input);
+    $data = json_decode(file_get_contents("php://input"));
     
     if (json_last_error() !== JSON_ERROR_NONE) {
         http_response_code(400);
-        echo json_encode(array('message' => 'Dados JSON inválidos.'));
+        echo json_encode(['message' => 'Dados JSON inválidos.']);
         exit;
     }
     
-    if (empty($data->id)) {
+    // Validar parâmetro id
+    $id = $data->id ?? null;
+    
+    if (empty($id)) {
         http_response_code(400);
-        echo json_encode(array('message' => 'ID do cliente é obrigatório.'));
+        echo json_encode(['message' => 'ID do cliente é obrigatório.']);
         exit;
     }
     
-    if (!is_numeric($data->id)) {
-        http_response_code(400);
-        echo json_encode(array('message' => 'ID do cliente deve ser numérico.'));
-        exit;
-    }
-    
-    $cliente->id = intval($data->id);
-    
-    if (!$cliente->readOne()) {
-        http_response_code(404);
-        echo json_encode(array('message' => 'Cliente não encontrado.'));
-        exit;
-    }
+    $cliente->id = $id;
     
     if ($cliente->delete()) {
         http_response_code(200);
-        echo json_encode(array('message' => 'Cliente deletado com sucesso.'));
+        echo json_encode(['message' => 'Cliente deletado com sucesso.']);
     } else {
         http_response_code(503);
-        echo json_encode(array('message' => 'Não foi possível deletar o cliente.'));
+        echo json_encode(['message' => 'Não foi possível deletar o cliente.']);
     }
     
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(array('message' => 'Erro interno do servidor.', 'error' => $e->getMessage()));
-    error_log($e->getMessage());
+    echo json_encode(['message' => 'Erro: ' . $e->getMessage()]);
+    exit;
+} catch (Error $e) {
+    http_response_code(500);
+    echo json_encode(['message' => 'Erro fatal: ' . $e->getMessage()]);
+    exit;
 }
-?>
