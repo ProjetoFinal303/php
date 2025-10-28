@@ -1,7 +1,8 @@
 <?php
+// Alteração: ID agora é recebido via $_GET (query string) ao invés de JSON no corpo da requisição
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Methods: DELETE, GET');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 ini_set('display_errors', 0);
@@ -23,20 +24,13 @@ try {
     
     $cliente = new Cliente($db);
     
-    $data = json_decode(file_get_contents("php://input"));
-    
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        http_response_code(400);
-        echo json_encode(['message' => 'Dados JSON inválidos.']);
-        exit;
-    }
+    // Obter ID via $_GET ou $_REQUEST
+    $id = $_REQUEST['id'] ?? null;
     
     // Validar parâmetro id
-    $id = $data->id ?? null;
-    
     if (empty($id)) {
         http_response_code(400);
-        echo json_encode(['message' => 'ID do cliente é obrigatório.']);
+        echo json_encode(['message' => 'Parâmetro id é obrigatório.']);
         exit;
     }
     
@@ -46,16 +40,14 @@ try {
         http_response_code(200);
         echo json_encode(['message' => 'Cliente deletado com sucesso.']);
     } else {
-        http_response_code(503);
-        echo json_encode(['message' => 'Não foi possível deletar o cliente.']);
+        http_response_code(400);
+        echo json_encode(['message' => 'Erro ao deletar cliente.']);
     }
-    
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['message' => 'Erro: ' . $e->getMessage()]);
-    exit;
+    echo json_encode(['message' => 'Erro interno do servidor: ' . $e->getMessage()]);
 } catch (Error $e) {
     http_response_code(500);
     echo json_encode(['message' => 'Erro fatal: ' . $e->getMessage()]);
-    exit;
 }
+?>
