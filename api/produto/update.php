@@ -1,5 +1,5 @@
 <?php
-// Alteração: Aceita POST além de PUT para atualização
+// Alteração: Aceita POST e padroniza leitura de array
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
@@ -24,34 +24,44 @@ try {
     
     $produto = new Produto($db);
     
+    // CORREÇÃO: Usando 'true' para decodificar como array, igual ao delete.php
     $input = file_get_contents("php://input");
-    $data = json_decode($input);
+    $data = json_decode($input, true); 
     
     if (json_last_error() !== JSON_ERROR_NONE) {
         http_response_code(400);
         echo json_encode(['message' => 'Dados JSON inválidos.']);
         exit;
     }
-    
-    if (!empty($data->id)) {
-        $produto->id = $data->id;
+
+    // Adiciona log para depuração, como sugerido no seu resumo
+    // Verifique este log no seu servidor (ex: /opt/lampp/logs/error_log)
+    error_log("UPDATE.PHP RECEBIDO: " . json_encode($data));
+
+    // CORREÇÃO: Acessando como array
+    if (!empty($data['id'])) {
+        $produto->id = $data['id'];
         
-        if (!isset($data->nome) || !isset($data->preco)) {
+        if (!isset($data['nome']) || !isset($data['preco'])) {
             http_response_code(400);
             echo json_encode(['message' => 'Nome e Preço são obrigatórios para atualizar.']);
             exit;
         }
         
-        $produto->nome = $data->nome;
-        $produto->descricao = isset($data->descricao) ? $data->descricao : '';
-        $produto->preco = $data->preco;
-        $produto->imagem_url = isset($data->image_url) ? $data->image_url : (isset($data->imagem_url) ? $data->imagem_url : '');
-        $produto->stripe_price_id = isset($data->stripe_price_id) ? $data->stripe_price_id : '';
+        $produto->nome = $data['nome'];
+        $produto->descricao = isset($data['descricao']) ? $data['descricao'] : '';
+        $produto->preco = $data['preco'];
+        
+        // CORREÇÃO: Simplificado para ler 'imagem_url'
+        $produto->imagem_url = isset($data['imagem_url']) ? $data['imagem_url'] : '';
+        $produto->stripe_price_id = isset($data['stripe_price_id']) ? $data['stripe_price_id'] : '';
         
         if ($produto->update()) {
             http_response_code(200);
             echo json_encode(['message' => 'Produto atualizado com sucesso.']);
         } else {
+            // Log de erro se o update falhar no modelo
+            error_log("UPDATE.PHP FALHOU: Erro ao executar \$produto->update() para ID: " . $data['id']);
             http_response_code(503);
             echo json_encode(['message' => 'Não foi possível atualizar o produto.']);
         }
