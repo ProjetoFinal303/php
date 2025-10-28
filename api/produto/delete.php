@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Methods: DELETE, POST'); // Permitir POST caso haja pre-flight
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 ini_set('display_errors', 0);
@@ -23,20 +23,12 @@ try {
     
     $produto = new Produto($db);
     
-    $data = json_decode(file_get_contents("php://input"));
+    // CORREÇÃO: Ler o ID do parâmetro da URL (GET) em vez do body
+    $id = $_GET['id'] ?? null;
     
-    if (json_last_error() !== JSON_ERROR_NONE) {
+    if (empty($id) || !is_numeric($id)) {
         http_response_code(400);
-        echo json_encode(['message' => 'Dados JSON inválidos.']);
-        exit;
-    }
-    
-    // Validar parâmetro id
-    $id = $data->id ?? null;
-    
-    if (empty($id)) {
-        http_response_code(400);
-        echo json_encode(['message' => 'ID do produto é obrigatório.']);
+        echo json_encode(['message' => 'ID do produto é obrigatório e deve ser numérico (via URL).']);
         exit;
     }
     
@@ -59,3 +51,4 @@ try {
     echo json_encode(['message' => 'Erro fatal: ' . $e->getMessage()]);
     exit;
 }
+?>
