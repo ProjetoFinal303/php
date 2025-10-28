@@ -1,8 +1,8 @@
 <?php
-// Alteração: ID agora é recebido via $_GET (query string) ao invés de JSON no corpo da requisição
+// Alteração: Aceita POST com JSON body para receber o id
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: DELETE, GET');
+header('Access-Control-Allow-Methods: POST, DELETE, GET');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 ini_set('display_errors', 0);
@@ -24,8 +24,24 @@ try {
     
     $produto = new Produto($db);
     
-    // Obter ID via $_GET ou $_REQUEST
-    $id = $_REQUEST['id'] ?? null;
+    // Obter ID do JSON body (POST) ou query string (DELETE/GET para compatibilidade)
+    $id = null;
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+        
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            http_response_code(400);
+            echo json_encode(['message' => 'JSON inválido: ' . json_last_error_msg()]);
+            exit;
+        }
+        
+        $id = $data['id'] ?? null;
+    } else {
+        // Para DELETE/GET, aceita query string
+        $id = $_REQUEST['id'] ?? null;
+    }
     
     // Validar parâmetro id
     if (empty($id)) {
