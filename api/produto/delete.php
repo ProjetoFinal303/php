@@ -1,16 +1,16 @@
 <?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');
-header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
-
 try {
-    include_once '../../config/database.php';
-    include_once '../../models/produto.php';
+    require_once '../../config/database.php';
+    require_once '../../models/produto.php';
     
     $database = new Database();
     $db = $database->getConnection();
@@ -32,31 +32,30 @@ try {
     }
     
     // Validar parâmetro id
-    if (empty($data->id)) {
+    $id = $data->id ?? null;
+    
+    if (empty($id)) {
         http_response_code(400);
-        echo json_encode(['message' => 'ID do produto não fornecido.']);
+        echo json_encode(['message' => 'ID do produto é obrigatório.']);
         exit;
     }
     
-    // Validar se id é numérico
-    if (!is_numeric($data->id)) {
-        http_response_code(400);
-        echo json_encode(['message' => 'ID do produto deve ser numérico.']);
-        exit;
-    }
-    
-    $produto->id = intval($data->id);
+    $produto->id = $id;
     
     if ($produto->delete()) {
         http_response_code(200);
-        echo json_encode(['message' => 'Produto apagado com sucesso.']);
+        echo json_encode(['message' => 'Produto deletado com sucesso.']);
     } else {
         http_response_code(503);
-        echo json_encode(['message' => 'Não foi possível apagar o produto.']);
+        echo json_encode(['message' => 'Não foi possível deletar o produto.']);
     }
+    
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['message' => 'Erro interno do servidor.', 'error' => $e->getMessage()]);
-    error_log($e->getMessage());
+    echo json_encode(['message' => 'Erro: ' . $e->getMessage()]);
+    exit;
+} catch (Error $e) {
+    http_response_code(500);
+    echo json_encode(['message' => 'Erro fatal: ' . $e->getMessage()]);
+    exit;
 }
-?>
