@@ -7,7 +7,8 @@ error_reporting(E_ALL);
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: PUT, PATCH');
+// CORREÇÃO: Permitir POST, que é como o script.js está enviando agora
+header('Access-Control-Allow-Methods: POST, PUT, PATCH');
 header('Access-Control-Allow-Headers: *');
 
 try {
