@@ -1,9 +1,8 @@
 <?php
+echo 'Início<br>';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-echo 'Entrou no update.php';
-exit;
 // Alteração: Aceita POST e padroniza leitura de array
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
@@ -12,6 +11,7 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST, PUT');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 try {
     include_once '../../config/database.php';
     include_once '../../models/produto.php';
@@ -29,7 +29,9 @@ try {
     
     // CORREÇÃO: Usando 'true' para decodificar como array, igual ao delete.php
     $input = file_get_contents("php://input");
+    echo 'Após file_get_contents<br>';
     $data = json_decode($input, true); 
+    echo 'Após json_decode<br>';
     
     if (json_last_error() !== JSON_ERROR_NONE) {
         http_response_code(400);
@@ -39,6 +41,7 @@ try {
     // Adiciona log para depuração, como sugerido no seu resumo
     // Verifique este log no seu servidor (ex: /opt/lampp/logs/error_log)
     error_log("UPDATE.PHP RECEBIDO: " . json_encode($data));
+    
     // CORREÇÃO: Acessando como array
     if (!empty($data['id'])) {
         $produto->id = $data['id'];
