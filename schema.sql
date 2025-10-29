@@ -1,11 +1,9 @@
 -- Database schema for lancho_db
-
 CREATE TABLE IF NOT EXISTS produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     descricao TEXT,
     preco DECIMAL(10, 2) NOT NULL,
-    imagem_url VARCHAR(500),
     stripe_price_id VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
