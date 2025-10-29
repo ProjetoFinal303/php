@@ -7,7 +7,6 @@ class Produto {
     public $nome;
     public $descricao;
     public $preco;
-    public $stripe_price_id;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -21,18 +20,16 @@ class Produto {
     }
 
     function create() {
-        $query = "INSERT INTO " . $this->table_name . " (nome, descricao, preco, stripe_price_id) VALUES (:nome, :descricao, :preco, :stripe_price_id)";
+        $query = "INSERT INTO " . $this->table_name . " (nome, descricao, preco) VALUES (:nome, :descricao, :preco)";
         $stmt = $this->conn->prepare($query);
 
         $this->nome = htmlspecialchars(strip_tags($this->nome));
         $this->descricao = htmlspecialchars(strip_tags($this->descricao));
         $this->preco = htmlspecialchars(strip_tags($this->preco));
-        $this->stripe_price_id = htmlspecialchars(strip_tags($this->stripe_price_id));
 
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":descricao", $this->descricao);
         $stmt->bindParam(":preco", $this->preco);
-        $stmt->bindParam(":stripe_price_id", $this->stripe_price_id);
         
         if($stmt->execute()) {
             return true;
@@ -45,8 +42,7 @@ class Produto {
                   SET 
                       nome = :nome, 
                       descricao = :descricao, 
-                      preco = :preco, 
-                      stripe_price_id = :stripe_price_id 
+                      preco = :preco 
                   WHERE 
                       id = :id";
         
@@ -56,14 +52,12 @@ class Produto {
         $this->nome = htmlspecialchars(strip_tags($this->nome));
         $this->descricao = htmlspecialchars(strip_tags($this->descricao));
         $this->preco = htmlspecialchars(strip_tags($this->preco));
-        $this->stripe_price_id = htmlspecialchars(strip_tags($this->stripe_price_id));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         // Vincular dados
         $stmt->bindParam(":nome", $this->nome);
         $stmt->bindParam(":descricao", $this->descricao);
         $stmt->bindParam(":preco", $this->preco);
-        $stmt->bindParam(":stripe_price_id", $this->stripe_price_id);
         $stmt->bindParam(":id", $this->id);
 
         // *** BLOCO DE EXECUÇÃO ATUALIZADO ***
