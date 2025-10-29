@@ -13,8 +13,8 @@ include_once '../../models/produto.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$produto = new Produto($db);
 
+$produto = new Produto($db);
 $data = json_decode(file_get_contents("php://input"));
 
 try {
@@ -22,7 +22,6 @@ try {
         $produto->nome = $data->nome;
         $produto->descricao = isset($data->descricao) ? $data->descricao : '';
         $produto->preco = $data->preco;
-        $produto->stripe_price_id = isset($data->stripe_price_id) ? $data->stripe_price_id : '';
 
         if($produto->create()) {
             http_response_code(201);
