@@ -3,10 +3,12 @@ echo 'Início<br>';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 // Alteração: Aceita POST e padroniza leitura de array
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST, PUT');
@@ -38,6 +40,7 @@ try {
         echo json_encode(['message' => 'Dados JSON inválidos.']);
         exit;
     }
+    
     // Adiciona log para depuração, como sugerido no seu resumo
     // Verifique este log no seu servidor (ex: /opt/lampp/logs/error_log)
     error_log("UPDATE.PHP RECEBIDO: " . json_encode($data));
@@ -55,9 +58,6 @@ try {
         $produto->nome = $data['nome'];
         $produto->descricao = isset($data['descricao']) ? $data['descricao'] : '';
         $produto->preco = $data['preco'];
-        
-        // CORREÇÃO: Simplificado para ler 'imagem_url'
-        $produto->imagem_url = isset($data['imagem_url']) ? $data['imagem_url'] : '';
         $produto->stripe_price_id = isset($data['stripe_price_id']) ? $data['stripe_price_id'] : '';
         
         if ($produto->update()) {
