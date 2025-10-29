@@ -3,6 +3,7 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods, Authorization, X-Requested-With');
+
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
@@ -13,6 +14,7 @@ include_once '../../models/produto.php';
 $database = new Database();
 $db = $database->getConnection();
 $produto = new Produto($db);
+
 $data = json_decode(file_get_contents("php://input"));
 
 try {
@@ -20,10 +22,6 @@ try {
         $produto->nome = $data->nome;
         $produto->descricao = isset($data->descricao) ? $data->descricao : '';
         $produto->preco = $data->preco;
-        
-        // CORREÇÃO: Simplificado para ler apenas 'imagem_url'
-        $produto->imagem_url = isset($data->imagem_url) ? $data->imagem_url : ''; 
-        
         $produto->stripe_price_id = isset($data->stripe_price_id) ? $data->stripe_price_id : '';
 
         if($produto->create()) {
