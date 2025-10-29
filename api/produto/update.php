@@ -58,7 +58,6 @@ try {
         $produto->nome = $data['nome'];
         $produto->descricao = isset($data['descricao']) ? $data['descricao'] : '';
         $produto->preco = $data['preco'];
-        $produto->stripe_price_id = isset($data['stripe_price_id']) ? $data['stripe_price_id'] : '';
         
         if ($produto->update()) {
             http_response_code(200);
