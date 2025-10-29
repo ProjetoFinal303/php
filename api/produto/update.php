@@ -1,9 +1,4 @@
 <?php
-echo 'Início<br>';
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 // Alteração: Aceita POST e padroniza leitura de array
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
@@ -31,9 +26,7 @@ try {
     
     // CORREÇÃO: Usando 'true' para decodificar como array, igual ao delete.php
     $input = file_get_contents("php://input");
-    echo 'Após file_get_contents<br>';
     $data = json_decode($input, true); 
-    echo 'Após json_decode<br>';
     
     if (json_last_error() !== JSON_ERROR_NONE) {
         http_response_code(400);
