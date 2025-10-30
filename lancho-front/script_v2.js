@@ -1,5 +1,6 @@
 document.querySelectorAll('form').forEach(function(form) {
   form.addEventListener('submit', async function(e) {
+  console.log("FORM SUBMITTED! ID:", form.id);
     e.preventDefault();
     var resp = document.getElementById('response');
     if (!resp) resp = form.querySelector('.response');
