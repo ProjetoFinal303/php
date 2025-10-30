@@ -1,4 +1,4 @@
-// Remove o console.log de depuração da linha 5
+// CORREÇÃO: Usando form.getAttribute('id') para evitar conflito com input name="id"
 document.querySelectorAll('form').forEach(function(form) {
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -11,48 +11,47 @@ document.querySelectorAll('form').forEach(function(form) {
     let url = '';
     let method = 'POST';
     
-    // CORRIGIDO: Usando form.getAttribute('id') para evitar conflito com input name="id"
     const formId = form.getAttribute('id'); 
     
     // PRODUTO
-    if (formId === 'criarProdutoForm') { // CORRIGIDO
-        url = '/php/api/produto/create.php';
+    if (formId === 'criarProdutoForm') {
+        url = '../api/produto/create.php'; // CAMINHO CORRIGIDO
     }
-    if (formId === 'atualizarProdutoForm') { // CORRIGIDO
-        url = '/php/api/produto/update.php';
+    if (formId === 'atualizarProdutoForm') {
+        url = '../api/produto/update.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'update';
     }
-    if (formId === 'deletarProdutoForm') { // CORRIGIDO
-        url = '/php/api/produto/delete.php';
+    if (formId === 'deletarProdutoForm') {
+        url = '../api/produto/delete.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'delete';
     }
-    if (formId === 'listarProdutosForm' || formId === 'listarProdutosBtn') { // CORRIGIDO
-      url = '/php/api/produto/read.php';
+    if (formId === 'listarProdutosForm' || formId === 'listarProdutosBtn') {
+      url = '../api/produto/read.php'; // CAMINHO CORRIGIDO
       method = 'GET';
     }
     
     // CLIENTE
-    if (formId === 'criarClienteForm') { // CORRIGIDO
-        url = '/php/api/cliente/create.php';
+    if (formId === 'criarClienteForm') {
+        url = '../api/cliente/create.php'; // CAMINHO CORRIGIDO
     }
-    if (formId === 'atualizarClienteForm') { // CORRIGIDO
-        url = '/php/api/cliente/update.php';
+    if (formId === 'atualizarClienteForm') {
+        url = '../api/cliente/update.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'update';
     }
-    if (formId === 'deletarClienteForm') { // CORRIGIDO
-        url = '/php/api/cliente/delete.php';
+    if (formId === 'deletarClienteForm') {
+        url = '../api/cliente/delete.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'delete';
     }
-    if (formId === 'listarClientesForm' || formId === 'listarClientesBtn') { // CORRIGIDO
-      url = '/php/api/cliente/read.php';
+    if (formId === 'listarClientesForm' || formId === 'listarClientesBtn') {
+      url = '../api/cliente/read.php'; // CAMINHO CORRIGIDO
       method = 'GET';
     }
-    if (formId === 'buscarClienteForm') { // CORRIGIDO
-      url = '/php/api/cliente/read_one.php';
+    if (formId === 'buscarClienteForm') {
+      url = '../api/cliente/read_one.php'; // CAMINHO CORRIGIDO
       method = 'GET';
       if (data.id) {
         url += '?id=' + encodeURIComponent(data.id);
@@ -63,30 +62,30 @@ document.querySelectorAll('form').forEach(function(form) {
     }
     
     // PEDIDO
-    if (formId === 'criarPedidoForm') { // CORRIGIDO
-        url = '/php/api/pedido/create.php';
+    if (formId === 'criarPedidoForm') {
+        url = '../api/pedido/create.php'; // CAMINHO CORRIGIDO
     }
-    if (formId === 'atualizarPedidoForm') { // CORRIGIDO
-        url = '/php/api/pedido/update.php';
+    if (formId === 'atualizarPedidoForm') {
+        url = '../api/pedido/update.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'update';
     }
-    if (formId === 'atualizarStatusPedidoForm') { // CORRIGIDO
-        url = '/php/api/pedido/update_status.php';
+    if (formId === 'atualizarStatusPedidoForm') {
+        url = '../api/pedido/update_status.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'update';
     }
-    if (formId === 'deletarPedidoForm') { // CORRIGIDO
-        url = '/php/api/pedido/delete.php';
+    if (formId === 'deletarPedidoForm') {
+        url = '../api/pedido/delete.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'delete';
     }
-    if (formId === 'listarPedidosForm' || formId === 'listarPedidosBtn') { // CORRIGIDO
-      url = '/php/api/pedido/read.php';
+    if (formId === 'listarPedidosForm' || formId === 'listarPedidosBtn') {
+      url = '../api/pedido/read.php'; // CAMINHO CORRIGIDO
       method = 'GET';
     }
-    if (formId === 'listarPedidosClienteForm') { // CORRIGIDO
-      url = '/php/api/pedido/read_by_cliente.php'; // API CORRIGIDA (estava read.php)
+    if (formId === 'listarPedidosClienteForm') {
+      url = '../api/pedido/read_by_cliente.php'; // CAMINHO CORRIGIDO
       method = 'GET';
       if (data.cliente_id) {
         url += '?cliente_id=' + encodeURIComponent(data.cliente_id);
@@ -94,40 +93,40 @@ document.querySelectorAll('form').forEach(function(form) {
     }
     
     // ESTOQUE
-    if (formId === 'criarEstoqueForm') { // CORRIGIDO
-        url = '/php/api/estoque/create.php';
+    if (formId === 'criarEstoqueForm') {
+        url = '../api/estoque/create.php'; // CAMINHO CORRIGIDO
     }
-    if (formId === 'atualizarEstoqueForm') { // CORRIGIDO
-        url = '/php/api/estoque/update.php';
+    if (formId === 'atualizarEstoqueForm') {
+        url = '../api/estoque/update.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'update';
     }
-    if (formId === 'deletarEstoqueForm') { // CORRIGIDO
-        url = '/php/api/estoque/delete.php';
+    if (formId === 'deletarEstoqueForm') {
+        url = '../api/estoque/delete.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'delete';
     }
-    if (formId === 'listarEstoqueForm') { // CORRIGIDO
-      url = '/php/api/estoque/read.php';
+    if (formId === 'listarEstoqueForm') {
+      url = '../api/estoque/read.php'; // CAMINHO CORRIGIDO
       method = 'GET';
     }
     
     // AVALIAÇÃO
-    if (formId === 'criarAvaliacaoForm') { // CORRIGIDO
-        url = '/php/api/avaliacoes/create.php'; // API CORRIGIDA (faltava 's')
+    if (formId === 'criarAvaliacaoForm') {
+        url = '../api/avaliacoes/create.php'; // CAMINHO CORRIGIDO
     }
-    if (formId === 'atualizarAvaliacaoForm') { // CORRIGIDO
-        url = '/php/api/avaliacao/update.php';
+    if (formId === 'atualizarAvaliacaoForm') {
+        url = '../api/avaliacao/update.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'update';
     }
-    if (formId === 'deletarAvaliacaoForm') { // CORRIGIDO
-        url = '/php/api/avaliacao/delete.php';
+    if (formId === 'deletarAvaliacaoForm') {
+        url = '../api/avaliacao/delete.php'; // CAMINHO CORRIGIDO
         method = 'POST';
         data.action = 'delete';
     }
-    if (formId === 'listarAvaliacoesForm') { // CORRIGIDO
-      url = '/php/api/avaliacoes/read_by_produto.php';
+    if (formId === 'listarAvaliacoesForm') {
+      url = '../api/avaliacoes/read_by_produto.php'; // CAMINHO CORRIGIDO
       method = 'GET';
       if (data.produto_id) {
         url += '?produto_id=' + encodeURIComponent(data.produto_id);
@@ -147,6 +146,7 @@ document.querySelectorAll('form').forEach(function(form) {
       const response = await fetch(url, options);
       
       if (!response.ok) {
+        // Lançar erro para o catch
         throw new Error('Erro HTTP: ' + response.status + ' ' + response.statusText);
       }
       
@@ -159,12 +159,12 @@ document.querySelectorAll('form').forEach(function(form) {
   });
 });
 
-// FUNÇÕES AUXILIARES (mantidas para compatibilidade com botões)
+// FUNÇÕES AUXILIARES (também corrigidas)
 async function listarProdutos() {
   const resp = document.getElementById('response');
   if (!resp) return;
   try {
-    const response = await fetch('/php/api/produto/read.php', { method: 'GET' });
+    const response = await fetch('../api/produto/read.php', { method: 'GET' }); // CAMINHO CORRIGIDO
     if (!response.ok) {
       throw new Error('Erro HTTP: ' + response.status);
     }
@@ -180,7 +180,7 @@ async function listarClientes() {
   const resp = document.getElementById('response');
   if (!resp) return;
   try {
-    const response = await fetch('/php/api/cliente/read.php', { method: 'GET' });
+    const response = await fetch('../api/cliente/read.php', { method: 'GET' }); // CAMINHO CORRIGIDO
     if (!response.ok) {
       throw new Error('Erro HTTP: ' + response.status);
     }
@@ -196,7 +196,7 @@ async function listarPedidos() {
   const resp = document.getElementById('response');
   if (!resp) return;
   try {
-    const response = await fetch('/php/api/pedido/read.php', { method: 'GET' });
+    const response = await fetch('../api/pedido/read.php', { method: 'GET' }); // CAMINHO CORRIGIDO
     if (!response.ok) {
       throw new Error('Erro HTTP: ' + response.status);
     }
@@ -212,7 +212,7 @@ async function listarEstoque() {
   const resp = document.getElementById('response');
   if (!resp) return;
   try {
-    const response = await fetch('/php/api/estoque/read.php', { method: 'GET' });
+    const response = await fetch('../api/estoque/read.php', { method: 'GET' }); // CAMINHO CORRIGIDO
     if (!response.ok) {
       throw new Error('Erro HTTP: ' + response.status);
     }
