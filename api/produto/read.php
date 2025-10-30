@@ -26,8 +26,10 @@ try {
         http_response_code(200);
         echo json_encode($produtos_arr);
     } else {
-        http_response_code(404);
-        echo json_encode(['message' => 'Nenhum produto encontrado.']);
+        // *** CORREÇÃO APLICADA ***
+        // Retorna 200 OK com a mensagem personalizada
+        http_response_code(200);
+        echo json_encode(['records' => [], 'message' => 'Nenhum produto cadastrado ainda.']);
     }
 } catch (Exception $e) {
     http_response_code(500);
