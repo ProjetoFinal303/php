@@ -1,6 +1,6 @@
+// Remove o console.log de depuração da linha 5
 document.querySelectorAll('form').forEach(function(form) {
   form.addEventListener('submit', async function(e) {
-  console.log("FORM SUBMITTED! ID:", form.id);
     e.preventDefault();
     var resp = document.getElementById('response');
     if (!resp) resp = form.querySelector('.response');
@@ -11,45 +11,47 @@ document.querySelectorAll('form').forEach(function(form) {
     let url = '';
     let method = 'POST';
     
+    // CORRIGIDO: Usando form.getAttribute('id') para evitar conflito com input name="id"
+    const formId = form.getAttribute('id'); 
+    
     // PRODUTO
-    if (form.id === 'criarProdutoForm') {
+    if (formId === 'criarProdutoForm') { // CORRIGIDO
         url = '/php/api/produto/create.php';
     }
-    if (form.id === 'atualizarProdutoForm') {
+    if (formId === 'atualizarProdutoForm') { // CORRIGIDO
         url = '/php/api/produto/update.php';
         method = 'POST';
         data.action = 'update';
     }
-    if (form.id === 'deletarProdutoForm') {
+    if (formId === 'deletarProdutoForm') { // CORRIGIDO
         url = '/php/api/produto/delete.php';
         method = 'POST';
         data.action = 'delete';
     }
-    if (form.id === 'listarProdutosForm' || form.id === 'listarProdutosBtn') {
+    if (formId === 'listarProdutosForm' || formId === 'listarProdutosBtn') { // CORRIGIDO
       url = '/php/api/produto/read.php';
       method = 'GET';
     }
     
     // CLIENTE
-    if (form.id === 'criarClienteForm') {
+    if (formId === 'criarClienteForm') { // CORRIGIDO
         url = '/php/api/cliente/create.php';
     }
-    if (form.id === 'atualizarClienteForm') {
+    if (formId === 'atualizarClienteForm') { // CORRIGIDO
         url = '/php/api/cliente/update.php';
         method = 'POST';
         data.action = 'update';
     }
-    if (form.id === 'deletarClienteForm') {
+    if (formId === 'deletarClienteForm') { // CORRIGIDO
         url = '/php/api/cliente/delete.php';
         method = 'POST';
         data.action = 'delete';
     }
-    if (form.id === 'listarClientesForm' || form.id === 'listarClientesBtn') {
+    if (formId === 'listarClientesForm' || formId === 'listarClientesBtn') { // CORRIGIDO
       url = '/php/api/cliente/read.php';
       method = 'GET';
     }
-    // NOVO: Buscar cliente por ID
-    if (form.id === 'buscarClienteForm') {
+    if (formId === 'buscarClienteForm') { // CORRIGIDO
       url = '/php/api/cliente/read_one.php';
       method = 'GET';
       if (data.id) {
@@ -61,31 +63,30 @@ document.querySelectorAll('form').forEach(function(form) {
     }
     
     // PEDIDO
-    if (form.id === 'criarPedidoForm') {
+    if (formId === 'criarPedidoForm') { // CORRIGIDO
         url = '/php/api/pedido/create.php';
     }
-    if (form.id === 'atualizarPedidoForm') {
+    if (formId === 'atualizarPedidoForm') { // CORRIGIDO
         url = '/php/api/pedido/update.php';
         method = 'POST';
         data.action = 'update';
     }
-    if (form.id === 'atualizarStatusPedidoForm') {
+    if (formId === 'atualizarStatusPedidoForm') { // CORRIGIDO
         url = '/php/api/pedido/update_status.php';
         method = 'POST';
         data.action = 'update';
     }
-    if (form.id === 'deletarPedidoForm') {
+    if (formId === 'deletarPedidoForm') { // CORRIGIDO
         url = '/php/api/pedido/delete.php';
         method = 'POST';
         data.action = 'delete';
     }
-    if (form.id === 'listarPedidosForm' || form.id === 'listarPedidosBtn') {
+    if (formId === 'listarPedidosForm' || formId === 'listarPedidosBtn') { // CORRIGIDO
       url = '/php/api/pedido/read.php';
       method = 'GET';
     }
-    // NOVO: Listar pedidos por cliente
-    if (form.id === 'listarPedidosClienteForm') {
-      url = '/php/api/pedido/read.php';
+    if (formId === 'listarPedidosClienteForm') { // CORRIGIDO
+      url = '/php/api/pedido/read_by_cliente.php'; // API CORRIGIDA (estava read.php)
       method = 'GET';
       if (data.cliente_id) {
         url += '?cliente_id=' + encodeURIComponent(data.cliente_id);
@@ -93,40 +94,39 @@ document.querySelectorAll('form').forEach(function(form) {
     }
     
     // ESTOQUE
-    if (form.id === 'criarEstoqueForm') {
+    if (formId === 'criarEstoqueForm') { // CORRIGIDO
         url = '/php/api/estoque/create.php';
     }
-    if (form.id === 'atualizarEstoqueForm') {
+    if (formId === 'atualizarEstoqueForm') { // CORRIGIDO
         url = '/php/api/estoque/update.php';
         method = 'POST';
         data.action = 'update';
     }
-    if (form.id === 'deletarEstoqueForm') {
+    if (formId === 'deletarEstoqueForm') { // CORRIGIDO
         url = '/php/api/estoque/delete.php';
         method = 'POST';
         data.action = 'delete';
     }
-    if (form.id === 'listarEstoqueForm') {
+    if (formId === 'listarEstoqueForm') { // CORRIGIDO
       url = '/php/api/estoque/read.php';
       method = 'GET';
     }
     
     // AVALIAÇÃO
-    if (form.id === 'criarAvaliacaoForm') {
-        url = '/php/api/avaliacao/create.php';
+    if (formId === 'criarAvaliacaoForm') { // CORRIGIDO
+        url = '/php/api/avaliacoes/create.php'; // API CORRIGIDA (faltava 's')
     }
-    if (form.id === 'atualizarAvaliacaoForm') {
+    if (formId === 'atualizarAvaliacaoForm') { // CORRIGIDO
         url = '/php/api/avaliacao/update.php';
         method = 'POST';
         data.action = 'update';
     }
-    if (form.id === 'deletarAvaliacaoForm') {
+    if (formId === 'deletarAvaliacaoForm') { // CORRIGIDO
         url = '/php/api/avaliacao/delete.php';
         method = 'POST';
         data.action = 'delete';
     }
-    // CORRIGIDO: Listar avaliações por produto usando o endpoint correto
-    if (form.id === 'listarAvaliacoesForm') {
+    if (formId === 'listarAvaliacoesForm') { // CORRIGIDO
       url = '/php/api/avaliacoes/read_by_produto.php';
       method = 'GET';
       if (data.produto_id) {
@@ -141,13 +141,11 @@ document.querySelectorAll('form').forEach(function(form) {
     
     try {
       const options = { method: method, headers: { 'Content-Type': 'application/json' } };
-      // NãO enviar 'body' em requisições GET
       if (method !== 'GET') {
         options.body = JSON.stringify(data);
       }
       const response = await fetch(url, options);
       
-      // MELHORADO: Verifica se a resposta é OK antes de tentar parsear JSON
       if (!response.ok) {
         throw new Error('Erro HTTP: ' + response.status + ' ' + response.statusText);
       }
