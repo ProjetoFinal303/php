@@ -10,6 +10,7 @@ document.querySelectorAll('form').forEach(function(form) {
     let url = '';
     let method = 'POST';
     
+    // PRODUTO
     if (form.id === 'criarProdutoForm') {
         url = '/php/api/produto/create.php';
     }
@@ -28,6 +29,7 @@ document.querySelectorAll('form').forEach(function(form) {
       method = 'GET';
     }
     
+    // CLIENTE
     if (form.id === 'criarClienteForm') {
         url = '/php/api/cliente/create.php';
     }
@@ -45,7 +47,19 @@ document.querySelectorAll('form').forEach(function(form) {
       url = '/php/api/cliente/read.php';
       method = 'GET';
     }
+    // NOVO: Buscar cliente por ID
+    if (form.id === 'buscarClienteForm') {
+      url = '/php/api/cliente/read_one.php';
+      method = 'GET';
+      if (data.id) {
+        url += '?id=' + encodeURIComponent(data.id);
+      } else {
+        resp.textContent = 'ID do Cliente é obrigatório.';
+        return;
+      }
+    }
     
+    // PEDIDO
     if (form.id === 'criarPedidoForm') {
         url = '/php/api/pedido/create.php';
     }
@@ -68,7 +82,16 @@ document.querySelectorAll('form').forEach(function(form) {
       url = '/php/api/pedido/read.php';
       method = 'GET';
     }
+    // NOVO: Listar pedidos por cliente
+    if (form.id === 'listarPedidosClienteForm') {
+      url = '/php/api/pedido/read.php';
+      method = 'GET';
+      if (data.cliente_id) {
+        url += '?cliente_id=' + encodeURIComponent(data.cliente_id);
+      }
+    }
     
+    // ESTOQUE
     if (form.id === 'criarEstoqueForm') {
         url = '/php/api/estoque/create.php';
     }
@@ -87,6 +110,7 @@ document.querySelectorAll('form').forEach(function(form) {
       method = 'GET';
     }
     
+    // AVALIAÇÃO
     if (form.id === 'criarAvaliacaoForm') {
         url = '/php/api/avaliacao/create.php';
     }
@@ -100,35 +124,56 @@ document.querySelectorAll('form').forEach(function(form) {
         method = 'POST';
         data.action = 'delete';
     }
+    // CORRIGIDO: Listar avaliações por produto usando o endpoint correto
     if (form.id === 'listarAvaliacoesForm') {
-      url = '/php/api/avaliacao/read.php';
+      url = '/php/api/avaliacoes/read_by_produto.php';
       method = 'GET';
+      if (data.produto_id) {
+        url += '?produto_id=' + encodeURIComponent(data.produto_id);
+      } else {
+        resp.textContent = 'ID do Produto é obrigatório.';
+        return;
+      }
     }
     
     if (!url) return;
+    
     try {
       const options = { method: method, headers: { 'Content-Type': 'application/json' } };
+      // NãO enviar 'body' em requisições GET
       if (method !== 'GET') {
         options.body = JSON.stringify(data);
       }
       const response = await fetch(url, options);
+      
+      // MELHORADO: Verifica se a resposta é OK antes de tentar parsear JSON
+      if (!response.ok) {
+        throw new Error('Erro HTTP: ' + response.status + ' ' + response.statusText);
+      }
+      
       const json = await response.json();
       resp.textContent = JSON.stringify(json, null, 2);
     } catch (err) {
-      resp.textContent = 'Erro ao chamar a API: ' + err;
+      resp.textContent = 'Erro ao chamar a API: ' + err.message;
+      console.error('Erro completo:', err);
     }
   });
 });
 
+// FUNÇÕES AUXILIARES (mantidas para compatibilidade com botões)
 async function listarProdutos() {
   const resp = document.getElementById('response');
   if (!resp) return;
   try {
     const response = await fetch('/php/api/produto/read.php', { method: 'GET' });
+    if (!response.ok) {
+      throw new Error('Erro HTTP: ' + response.status);
+    }
     const json = await response.json();
     resp.textContent = JSON.stringify(json, null, 2);
   } catch (err) {
-    resp.textContent = 'Erro ao chamar a API: ' + err;
+    resp.textContent = 'Erro ao chamar a API: ' + err.message;
+    console.error('Erro completo:', err);
   }
 }
 
@@ -137,10 +182,14 @@ async function listarClientes() {
   if (!resp) return;
   try {
     const response = await fetch('/php/api/cliente/read.php', { method: 'GET' });
+    if (!response.ok) {
+      throw new Error('Erro HTTP: ' + response.status);
+    }
     const json = await response.json();
     resp.textContent = JSON.stringify(json, null, 2);
   } catch (err) {
-    resp.textContent = 'Erro ao chamar a API: ' + err;
+    resp.textContent = 'Erro ao chamar a API: ' + err.message;
+    console.error('Erro completo:', err);
   }
 }
 
@@ -149,10 +198,14 @@ async function listarPedidos() {
   if (!resp) return;
   try {
     const response = await fetch('/php/api/pedido/read.php', { method: 'GET' });
+    if (!response.ok) {
+      throw new Error('Erro HTTP: ' + response.status);
+    }
     const json = await response.json();
     resp.textContent = JSON.stringify(json, null, 2);
   } catch (err) {
-    resp.textContent = 'Erro ao chamar a API: ' + err;
+    resp.textContent = 'Erro ao chamar a API: ' + err.message;
+    console.error('Erro completo:', err);
   }
 }
 
@@ -161,9 +214,13 @@ async function listarEstoque() {
   if (!resp) return;
   try {
     const response = await fetch('/php/api/estoque/read.php', { method: 'GET' });
+    if (!response.ok) {
+      throw new Error('Erro HTTP: ' + response.status);
+    }
     const json = await response.json();
     resp.textContent = JSON.stringify(json, null, 2);
   } catch (err) {
-    resp.textContent = 'Erro ao chamar a API: ' + err;
+    resp.textContent = 'Erro ao chamar a API: ' + err.message;
+    console.error('Erro completo:', err);
   }
 }
