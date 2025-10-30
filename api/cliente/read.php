@@ -34,14 +34,12 @@ try {
         $clientes_arr["records"] = array();
         
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            // CRIT\u00cdCO: Remover senha e outros dados sens\u00edveis da resposta
             $item = array(
                 'id' => $row['id'],
                 'nome' => $row['nome'],
                 'email' => $row['email'],
                 'contato' => $row['contato'],
                 'created_at' => isset($row['created_at']) ? $row['created_at'] : null
-                // senha removida por seguran\u00e7a - NUNCA deve ser retornada
             );
             
             array_push($clientes_arr["records"], $item);
@@ -50,8 +48,10 @@ try {
         http_response_code(200);
         echo json_encode($clientes_arr);
     } else {
-        http_response_code(404);
-        echo json_encode(array('message' => 'Nenhum cliente encontrado.'));
+        // *** CORREÇÃO APLICADA ***
+        // Retorna 200 OK com a mensagem personalizada
+        http_response_code(200);
+        echo json_encode(array('records' => [], 'message' => 'Sem clientes cadastrados ainda.'));
     }
     
 } catch (Exception $e) {
