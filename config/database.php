@@ -4,7 +4,7 @@ class Database {
     private $host = "localhost:3306"; // A ÚNICA MUDANÇA É AQUI
     private $db_name = "lancho_db"; // Nome do banco de dados que você criou
     private $username = "root";
-    private $password = ""; // Senha vazia por padrão no XAMPP
+    private $password = "123"; // Senha vazia por padrão no XAMPP
     public $conn;
     
     // Obtém a conexão com o banco de dados
